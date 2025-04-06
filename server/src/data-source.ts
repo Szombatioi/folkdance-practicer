@@ -4,12 +4,12 @@ export const AppDataSource = new DataSource({
   type: 'postgres',
   host: 'localhost',
   port: 5432,
-  username: 'your_db_user',
-  password: 'your_password',
-  database: 'your_db_name',
-  synchronize: false, // be careful! true will auto-sync & can DROP data
+  username: 'admin',
+  password: 'Test123',
+  database: 'fdp_dev',
+  synchronize: false,
   logging: true,
-  entities: [],
-  migrations: ['src/migrations/*.ts'],
+  entities: ['src/entities/**/*.ts'],
+  migrations: ['src/migrations/**/*.ts'],
   subscribers: [],
 });
