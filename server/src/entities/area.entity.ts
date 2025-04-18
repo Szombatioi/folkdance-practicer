@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Region } from "./Region";
-import { Dialect } from "./Dialect";
+import { Region } from "./region.entity";
+import { Dialect } from "./dialect.entity";
 
 @Entity()
 export class Area{

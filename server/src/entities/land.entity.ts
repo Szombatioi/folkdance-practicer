@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Dance } from "./Dance";
-import { Region } from "./Region";
+import { Dance } from "./dance.entity";
+import { Region } from "./region.entity";
 
 @Entity()
 export class Land{

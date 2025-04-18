@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Land } from "./Land";
+import { Land } from "./land.entity";
 
 @Entity()
 export class Dance{
