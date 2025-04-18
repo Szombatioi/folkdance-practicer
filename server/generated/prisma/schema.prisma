@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Area {
+  id        Int      @id @default(autoincrement())
+  name      String
+  regions   Region[]
+  dialect   Dialect  @relation(fields: [dialectId], references: [id])
+  dialectId Int
+}
+
+model Dance {
+  id        Int      @id @default(autoincrement())
+  type      String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  landId    Int
+  land      Land     @relation(fields: [landId], references: [id])
+}
+
+model Dialect {
+  id    Int    @id @default(autoincrement())
+  name  String
+  areas Area[]
+}
+
+model Land {
+  id       Int     @id @default(autoincrement())
+  name     String
+  regionId Int
+  region   Region  @relation(fields: [regionId], references: [id])
+  dances   Dance[]
+}
+
+model Region {
+  id     Int    @id @default(autoincrement())
+  name   String
+  lands  Land[]
+  areaId Int
+  area   Area   @relation(fields: [areaId], references: [id])
+}
