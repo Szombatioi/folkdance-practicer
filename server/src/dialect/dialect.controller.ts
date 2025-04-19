@@ -1,32 +1,33 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { DialectService } from './dialect.service';
+import { UpdateDialectDto } from './dto/update-dialect.dto';
 
 @Controller('dialect')
 export class DialectController {
-    constructor(private readonly dialectService: DialectService) {}
+  constructor(private readonly dialectService: DialectService) {}
 
-    // @Get()
-    // async findAll() {
-    //     return this.dialectService.findAll();
-    // }
+  @Post()
+  create(@Body() data: { name: string }) {
+    return this.dialectService.create(data);
+  }
 
-    // @Get(':id')
-    // async findOne(@Param('id') id: string) {
-    //     return this.dialectService.findOne(+id);
-    // }
+  @Get()
+  findAll() {
+    return this.dialectService.findAll();
+  }
 
-    // @Post()
-    // async create(@Body() data: { name: string }) {
-    //     return this.dialectService.create(data);
-    // }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.dialectService.findOne(+id);
+  }
 
-    // @Patch(':id')
-    // async update(@Param('id') id: string, @Body() data: { name: string }) {
-    //     return this.dialectService.update(+id, data);
-    // }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateDialectDto: UpdateDialectDto) {
+    return this.dialectService.update(+id, updateDialectDto);
+  }
 
-    // @Delete(':id')
-    // async delete(@Param('id') id: string) {
-    //     return this.dialectService.delete(+id);
-    // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.dialectService.remove(+id);
+  }
 }

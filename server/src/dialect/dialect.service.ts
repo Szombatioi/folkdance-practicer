@@ -1,47 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { UpdateDialectDto } from './dto/update-dialect.dto';
 import { PrismaService } from 'nestjs-prisma';
+
 
 @Injectable()
 export class DialectService {
-    // constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-    // //C
-    // async create(data: {name: string}) {
-    //     return this.prisma.dialect.create({data,});
-    // }
+  async create(data: {name: string}): Promise<any> {
+    return await this.prismaService.dialect.create({data});
+  }
 
-    // //R
-    // async findAll(){
-    //     return this.prisma.dialect.findMany({
-    //         include: {
-    //             areas: true,
-    //         }
-    //     });
-    // }
+  findAll() {
+    return `This action returns all dialect`;
+  }
 
-    // async findOne(id: number){
-    //     return this.prisma.dialect.findUnique({
-    //         where: {id}, 
-    //         include: {
-    //             areas: true,
-    //         }   
-    //     });
-    // }
+  findOne(id: number) {
+    return `This action returns a #${id} dialect`;
+  }
 
-    // //U
-    // async update(id: number, data: {name: string}) {
-    //     return this.prisma.dialect.update({
-    //         where: {id}, 
-    //         data,
-    //         include: {
-    //             areas: true,
-    //         }
-    //     });
-    // }
+  update(id: number, updateDialectDto: UpdateDialectDto) {
+    return `This action updates a #${id} dialect`;
+  }
 
-    // //D
-    // async delete(id: number) {
-    //     return this.prisma.dialect.delete({where: {id}});
-    // }
+  remove(id: number) {
+    return `This action removes a #${id} dialect`;
+  }
 }
-

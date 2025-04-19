@@ -117,36 +117,9 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.AreaScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  dialectId: 'dialectId'
-};
-
-exports.Prisma.DanceScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  landId: 'landId'
-};
-
 exports.Prisma.DialectScalarFieldEnum = {
   id: 'id',
   name: 'name'
-};
-
-exports.Prisma.LandScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  regionId: 'regionId'
-};
-
-exports.Prisma.RegionScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  areaId: 'areaId'
 };
 
 exports.Prisma.SortOrder = {
@@ -161,11 +134,7 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Area: 'Area',
-  Dance: 'Dance',
-  Dialect: 'Dialect',
-  Land: 'Land',
-  Region: 'Region'
+  Dialect: 'Dialect'
 };
 
 /**
