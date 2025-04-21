@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Dialect } from './entities/dialect.entity';
 import { Repository } from 'typeorm';
 import { Region } from 'src/region/entities/region.entity';
+import { CreateDialectDto } from './dto/create-dialect.dto';
 
 
 @Injectable()
@@ -16,7 +17,7 @@ export class DialectService {
     private readonly regionRepository: Repository<Region>
   ) {}
 
-  async create(data: {name: string}): Promise<any> {
+  async create(data: CreateDialectDto): Promise<any> {
     await this.dialectRepository.create(data);
   }
 
@@ -49,15 +50,26 @@ export class DialectService {
     return await this.dialectRepository.find({relations: ['regions']});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dialect`;
+  async findOne(id: number) {
+    const dialect = await this.dialectRepository.findOne({where: {id}, relations: ['regions']});
+    if(dialect === null){
+      throw new NotFoundException("Dialect not found with id #"+id.toString());
+    }
+    return dialect;
   }
 
-  update(id: number, updateDialectDto: UpdateDialectDto) {
-    return `This action updates a #${id} dialect`;
+  async update(id: number, newDialectDto: UpdateDialectDto) {
+    try{
+      let dialect = await this.findOne(id);
+      Object.assign(dialect, newDialectDto);
+      await this.dialectRepository.save(dialect);
+    } catch(e){
+      throw e;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} dialect`;
-  }
+  //TODO: will we need it?
+  // remove(id: number) {
+  // return `This action removes a #${id} dialect`;
+  // }
 }

@@ -27,8 +27,8 @@ export class RegionController {
     return this.regionService.update(+id, updateRegionDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.regionService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.regionService.remove(+id);
+  // }
 }

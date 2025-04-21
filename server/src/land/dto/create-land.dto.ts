@@ -1,1 +1,3 @@
-export class CreateLandDto {}
+export class CreateLandDto {
+    name: string;
+}

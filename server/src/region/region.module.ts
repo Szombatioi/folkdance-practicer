@@ -11,5 +11,6 @@ import { Dialect } from 'src/dialect/entities/dialect.entity';
   ],
   controllers: [RegionController],
   providers: [RegionService],
+  exports: [RegionService]
 })
 export class RegionModule {}

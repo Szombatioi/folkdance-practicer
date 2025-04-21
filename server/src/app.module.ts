@@ -11,6 +11,7 @@ import { LandModule } from './land/land.module';
 import { Region } from './region/entities/region.entity';
 import { Area } from './area/entities/area.entity';
 import { Land } from './land/entities/land.entity';
+import { RegionService } from './region/region.service';
 
 
 @Module({
@@ -37,6 +38,6 @@ import { Land } from './land/entities/land.entity';
     LandModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RegionService],
 })
 export class AppModule {}

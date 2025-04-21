@@ -1,26 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLandDto } from './dto/create-land.dto';
 import { UpdateLandDto } from './dto/update-land.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Land } from './entities/land.entity';
+import { Repository } from 'typeorm';
+import { Area } from 'src/area/entities/area.entity';
 
 @Injectable()
 export class LandService {
-  create(createLandDto: CreateLandDto) {
-    return 'This action adds a new land';
+  constructor(
+    @InjectRepository(Land)
+    private readonly landRepository: Repository<Land>,
+
+    @InjectRepository(Area)
+    private readonly areaRepository: Repository<Area>
+  ){}
+
+  async create(data: CreateLandDto, areaId: number) {
+    const area = await this.areaRepository.findOne({where: {id: areaId}});
+
+    if(!area) throw new NotFoundException("Area not found with id #" + areaId.toString());
+
+    const land = await this.landRepository.create(data);
+    land.area = area;
+    await this.landRepository.save(land);
   }
 
-  findAll() {
-    return `This action returns all land`;
+  async findAll() {
+    return await this.landRepository.find({relations: ["area"]});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} land`;
+  async findOne(id: number) {
+    const land = await this.landRepository.findOne({where: {id}, relations: ["area"]});
+
+    if(!land) throw new NotFoundException("Land not found with id #" + id.toString());
+
+    return land;
   }
 
-  update(id: number, updateLandDto: UpdateLandDto) {
-    return `This action updates a #${id} land`;
+  async update(id: number, newLandDto: UpdateLandDto) {
+    try{
+      const land = await this.findOne(id);
+      Object.assign(land, newLandDto)
+      await this.landRepository.save(land);
+    } catch(e){
+      throw e;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} land`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} land`;
+  // }
 }

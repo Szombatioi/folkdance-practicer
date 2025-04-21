@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { LandService } from './land.service';
 import { CreateLandDto } from './dto/create-land.dto';
 import { UpdateLandDto } from './dto/update-land.dto';
@@ -8,8 +8,8 @@ export class LandController {
   constructor(private readonly landService: LandService) {}
 
   @Post()
-  create(@Body() createLandDto: CreateLandDto) {
-    return this.landService.create(createLandDto);
+  create(@Body() createLandDto: CreateLandDto, @Query("areaId") areaId: number) {
+    return this.landService.create(createLandDto, areaId);
   }
 
   @Get()
@@ -27,8 +27,8 @@ export class LandController {
     return this.landService.update(+id, updateLandDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.landService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.landService.remove(+id);
+  // }
 }

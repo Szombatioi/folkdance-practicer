@@ -26,8 +26,8 @@ export class DialectController {
     return this.dialectService.update(+id, updateDialectDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.dialectService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.dialectService.remove(+id);
+  // }
 }

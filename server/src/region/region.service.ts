@@ -35,15 +35,28 @@ export class RegionService {
     return await this.regionsRepository.find({relations: ['dialect', 'areas']});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} region`;
+  async findOne(id: number) {
+    const region = await this.regionsRepository.findOne({where: {id}, relations: ['dialect', 'areas']});
+
+    if(!region){
+      throw new NotFoundException('Region not found with id #' + id.toString());
+    }
+
+    return region;
   }
 
-  update(id: number, updateRegionDto: UpdateRegionDto) {
-    return `This action updates a #${id} region`;
+  async update(id: number, newRegionDto: UpdateRegionDto) {
+    try{
+      const region = await this.findOne(id);
+      Object.assign(region, newRegionDto);
+      this.regionsRepository.save(region);
+    } catch(e){
+      throw e;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} region`;
-  }
+  //TODO: will we need this?
+  // remove(id: number) {
+  //   return `This action removes a #${id} region`;
+  // }
 }
