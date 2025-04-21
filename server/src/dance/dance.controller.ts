@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { DanceService } from './dance.service';
 import { CreateDanceDto } from './dto/create-dance.dto';
 import { UpdateDanceDto } from './dto/update-dance.dto';
@@ -8,8 +8,8 @@ export class DanceController {
   constructor(private readonly danceService: DanceService) {}
 
   @Post()
-  create(@Body() createDanceDto: CreateDanceDto) {
-    return this.danceService.create(createDanceDto);
+  create(@Body() createDanceDto: CreateDanceDto, @Query("areaId") areaId: number) {
+    return this.danceService.create(createDanceDto, areaId);
   }
 
   @Get()
@@ -27,8 +27,8 @@ export class DanceController {
     return this.danceService.update(+id, updateDanceDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.danceService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.danceService.remove(+id);
+  // }
 }

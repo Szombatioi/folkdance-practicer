@@ -18,7 +18,9 @@ export class DialectService {
   ) {}
 
   async create(data: CreateDialectDto): Promise<any> {
-    await this.dialectRepository.create(data);
+    await this.dialectRepository.save(
+      await this.dialectRepository.create(data)
+    );
   }
 
   async addRegion(id: number, rid: number){

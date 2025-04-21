@@ -12,5 +12,6 @@ import { Region } from 'src/region/entities/region.entity';
   ],
   controllers: [AreaController],
   providers: [AreaService],
+  exports: [AreaService]
 })
 export class AreaModule {}

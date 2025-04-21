@@ -1,1 +1,3 @@
-export class CreateDanceDto {}
+export class CreateDanceDto {
+    name: string;
+}

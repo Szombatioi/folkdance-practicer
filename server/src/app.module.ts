@@ -14,6 +14,12 @@ import { Land } from './land/entities/land.entity';
 import { RegionService } from './region/region.service';
 import { DanceModule } from './dance/dance.module';
 import { Dance } from './dance/entities/dance.entity';
+import { DanceTypesModule } from './dance-types/dance-types.module';
+import { DanceType } from './dance-types/entities/dance-type.entity';
+import { DanceCategoriesModule } from './dance-categories/dance-categories.module';
+import { DanceCategory } from './dance-categories/entities/dance-category.entity';
+import { DanceNotesModule } from './dance-notes/dance-notes.module';
+import { DanceNote } from './dance-notes/entities/dance-note.entity';
 
 
 @Module({
@@ -29,7 +35,7 @@ import { Dance } from './dance/entities/dance.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Dialect, Region, Area, Land, Dance],
+        entities: [Dialect, Region, Area, Land, Dance, DanceType, DanceCategory, DanceType, DanceNote],
         synchronize: true, //TODO: remove this in production!
       })
     }),
@@ -39,6 +45,9 @@ import { Dance } from './dance/entities/dance.entity';
     AreaModule,
     LandModule,
     DanceModule,
+    DanceTypesModule,
+    DanceCategoriesModule,
+    DanceNotesModule,
   ],
   controllers: [AppController],
   providers: [AppService, RegionService],

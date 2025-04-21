@@ -13,7 +13,4 @@ export class Land {
 
     @ManyToOne(() => Area, (a) => a.lands)
     area: Area;
-
-    @ManyToMany(() => Dance, (d) => d.lands)
-    dances: Dance[];
 }
