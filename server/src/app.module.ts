@@ -12,6 +12,8 @@ import { Region } from './region/entities/region.entity';
 import { Area } from './area/entities/area.entity';
 import { Land } from './land/entities/land.entity';
 import { RegionService } from './region/region.service';
+import { DanceModule } from './dance/dance.module';
+import { Dance } from './dance/entities/dance.entity';
 
 
 @Module({
@@ -27,7 +29,7 @@ import { RegionService } from './region/region.service';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Dialect, Region, Area, Land],
+        entities: [Dialect, Region, Area, Land, Dance],
         synchronize: true, //TODO: remove this in production!
       })
     }),
@@ -36,6 +38,7 @@ import { RegionService } from './region/region.service';
     RegionModule,
     AreaModule,
     LandModule,
+    DanceModule,
   ],
   controllers: [AppController],
   providers: [AppService, RegionService],

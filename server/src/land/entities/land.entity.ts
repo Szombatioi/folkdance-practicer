@@ -1,5 +1,6 @@
 import { Area } from "src/area/entities/area.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Dance } from "src/dance/entities/dance.entity";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 //Falvak, települések: Magyarpalatka, Méra, Szatmár, Nagyecsed, Vajdaszentivány
 @Entity()
@@ -12,4 +13,7 @@ export class Land {
 
     @ManyToOne(() => Area, (a) => a.lands)
     area: Area;
+
+    @ManyToMany(() => Dance, (d) => d.lands)
+    dances: Dance[];
 }
