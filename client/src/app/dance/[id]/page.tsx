@@ -1,5 +1,5 @@
 'use client'
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, IconButton, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, IconButton, Typography } from "@mui/material";
 import InformationsTable from "./informationsTable";
 import { ArrowBack } from "@mui/icons-material";
 import Link from "next/link";
@@ -19,7 +19,7 @@ export default function Dance(/*TODO: Dance*/) {
             {/* TODO: Ide jönnek a figurák, csoportokba foglalva */}
             {/* for ciklus */}
 
-            <Accordion elevation={3} sx={{ width: '60%', justifySelf: 'center', alignSelf: 'center' }}>
+            <Accordion defaultExpanded elevation={3} sx={{ width: '60%', justifySelf: 'center', alignSelf: 'center', borderRadius: '8px', marginTop: '1rem' }}>
                 <AccordionSummary sx={{borderBottom: '1px solid grey'}}>
                     <Typography variant="h5">Bevonulások</Typography>
                 </AccordionSummary>

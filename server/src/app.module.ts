@@ -20,6 +20,8 @@ import { DanceCategoriesModule } from './dance-categories/dance-categories.modul
 import { DanceCategory } from './dance-categories/entities/dance-category.entity';
 import { DanceNotesModule } from './dance-notes/dance-notes.module';
 import { DanceNote } from './dance-notes/entities/dance-note.entity';
+import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entity';
 
 
 @Module({
@@ -35,7 +37,7 @@ import { DanceNote } from './dance-notes/entities/dance-note.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Dialect, Region, Area, Land, Dance, DanceType, DanceCategory, DanceType, DanceNote],
+        entities: [Dialect, Region, Area, Land, Dance, DanceType, DanceCategory, DanceType, DanceNote, User],
         synchronize: true, //TODO: remove this in production!
       })
     }),
@@ -48,6 +50,7 @@ import { DanceNote } from './dance-notes/entities/dance-note.entity';
     DanceTypesModule,
     DanceCategoriesModule,
     DanceNotesModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, RegionService],
