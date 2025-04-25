@@ -22,6 +22,7 @@ import { DanceNotesModule } from './dance-notes/dance-notes.module';
 import { DanceNote } from './dance-notes/entities/dance-note.entity';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 
 @Module({
@@ -42,6 +43,10 @@ import { User } from './user/entities/user.entity';
       })
     }),
     TypeOrmModule.forFeature([Dialect, Region, Area, Land]),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET || 'secret',
+      signOptions: { expiresIn: '1d' },
+    }),
     DialectModule,
     RegionModule,
     AreaModule,

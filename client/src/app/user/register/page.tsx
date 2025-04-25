@@ -3,6 +3,8 @@
 import CustomSnackbar from "@/app/components/customSnackbar";
 import { Box, Button, TextField } from "@mui/material";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import router from "next/router";
 import { useState } from "react";
 
 export default function Register() {
@@ -16,6 +18,8 @@ export default function Register() {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarSeverity, setSnackbarSeverity] = useState<"error" | "warning" | "info" | "success">("error");
+
+    const router = useRouter();
 
     const isInputValid = () => {
         if (password !== passwordAgain) {
@@ -72,11 +76,13 @@ export default function Register() {
                 password: password,
             };
 
-            const response = await axios.post("http://localhost:3001/user", payload);
+            const response = await axios.post("http://localhost:3001/user/register", payload);
 
             if (response.status >= 200 && response.status < 300) {
-                console.log("Sikeres regisztráció!");
-                //router.push("");
+                setSnackbarMessage("Sikeres regisztráció!");
+                setSnackbarSeverity("success");
+                setSnackbarOpen(true);
+                router.push("/");
             }
             else {
                 console.log("Sikertelen regisztráció!");
