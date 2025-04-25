@@ -76,7 +76,7 @@ export default function Register() {
                 password: password,
             };
 
-            const response = await axios.post("http://localhost:3001/user/register", payload);
+            const response = await axios.post(process.env.BACKEND_URL ?? "http://localhost:3001" + "/user/register", payload);
 
             if (response.status >= 200 && response.status < 300) {
                 setSnackbarMessage("Sikeres regisztráció!");

@@ -11,6 +11,9 @@ Backend variables:
 `DB_DATABASE` - name of the database that the app will use
 `JWT_SECRET` - your JWT secret
 
+Frontend variables:
+`BACKEND_URL`
+
 Install dependencies for both projects:
 `$ npm i`
 
