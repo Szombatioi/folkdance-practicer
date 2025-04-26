@@ -16,12 +16,13 @@ export class LandService {
     private readonly areaRepository: Repository<Area>
   ){}
 
-  async create(data: CreateLandDto, areaId: number) {
+  async create(data: CreateLandDto) {
+    const {areaId, ...landData} = data;
     const area = await this.areaRepository.findOne({where: {id: areaId}});
 
     if(!area) throw new NotFoundException("Area not found with id #" + areaId.toString());
 
-    const land = await this.landRepository.create(data);
+    const land = await this.landRepository.create(landData);
     land.area = area;
     await this.landRepository.save(land);
   }
@@ -41,7 +42,15 @@ export class LandService {
   async update(id: number, newLandDto: UpdateLandDto) {
     try{
       const land = await this.findOne(id);
-      Object.assign(land, newLandDto)
+      const {newAreaId, ...newLand} = newLandDto;
+      Object.assign(land, newLand)
+
+      if(newAreaId !== 0) {
+        const area = await this.areaRepository.findOne({where: {id: newAreaId}});
+        if(!area) throw new NotFoundException('New area not found with id #' + newAreaId.toString());
+        land.area = area;
+      }
+
       await this.landRepository.save(land);
     } catch(e){
       throw e;

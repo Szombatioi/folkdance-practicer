@@ -8,8 +8,10 @@ export class RegionController {
   constructor(private readonly regionService: RegionService) {}
 
   @Post()
-  create(@Body() data: {name: string}, @Query("dialectId") dialectId: number) {
-    return this.regionService.create(data, dialectId);
+  create(@Body() data: CreateRegionDto) {
+    const { dialectId, ...regionData } = data;
+    console.log(dialectId);
+    return this.regionService.create(regionData, dialectId);
   }
 
   @Get()

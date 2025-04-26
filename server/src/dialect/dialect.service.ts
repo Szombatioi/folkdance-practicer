@@ -36,7 +36,7 @@ export class DialectService {
       throw new NotFoundException("Region not found for dialect: " + dialect.name);
     }
 
-    dialect.regions.push(region!);
+    dialect.regions.push(region);
     await this.dialectRepository.save(dialect);
   }
 

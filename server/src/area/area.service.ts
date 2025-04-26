@@ -14,40 +14,47 @@ export class AreaService {
     private readonly areaRepository: Repository<Area>,
     @InjectRepository(Region)
     private readonly regionRepository: Repository<Region>
-  ){}
-  
-  async create(data: CreateAreaDto, regionId: number) {
-    
-    const region = await this.regionRepository.findOne({where: {id: regionId}});
+  ) { }
 
-    if(!region) throw new NotFoundException("Region not found with id #"+regionId.toString());
+  async create(data: { name: string }, regionId: number) {
+
+    const region = await this.regionRepository.findOne({ where: { id: regionId } });
+
+    if (!region) throw new NotFoundException("Region not found with id #" + regionId.toString());
 
     const area = await this.areaRepository.create(data);
     area.region = region;
     await this.areaRepository.save(area);
-    
+
   }
 
   async findAll() {
-    return await this.areaRepository.find({relations: ['region']});
+    return await this.areaRepository.find({ relations: ['region'] });
   }
 
   async findOne(id: number) {
-    const area = await this.areaRepository.findOne({where: {id}, relations: ['region']});
+    const area = await this.areaRepository.findOne({ where: { id }, relations: ['region'] });
 
-    if(!area) throw new NotFoundException("Area not found with id #" + id.toString());
+    if (!area) throw new NotFoundException("Area not found with id #" + id.toString());
 
     return area;
   }
 
   async update(id: number, newAreaDto: UpdateAreaDto) {
-    try{
-      const area = await this.findOne(id);
-      Object.assign(area, newAreaDto);
-      await this.areaRepository.save(area);
-    } catch(e){
-      throw e;
+    const area = await this.findOne(id);
+
+    const { newRegionId, ...newArea } = newAreaDto;
+    Object.assign(area, newArea);
+
+    //find region
+    if (newRegionId !== 0) {
+      const region = await this.regionRepository.findOne({ where: { id: newRegionId } });
+      if (!region) throw new NotFoundException('New region not found with id #' + newRegionId.toString());
+
+      area.region = region;
     }
+
+    await this.areaRepository.save(area);
   }
 
   // remove(id: number) {

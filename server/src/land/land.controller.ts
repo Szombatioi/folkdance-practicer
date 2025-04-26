@@ -8,8 +8,8 @@ export class LandController {
   constructor(private readonly landService: LandService) {}
 
   @Post()
-  create(@Body() createLandDto: CreateLandDto, @Query("areaId") areaId: number) {
-    return this.landService.create(createLandDto, areaId);
+  create(@Body() createLandDto: CreateLandDto) {
+    return this.landService.create(createLandDto);
   }
 
   @Get()

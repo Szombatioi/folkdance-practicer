@@ -8,8 +8,9 @@ export class AreaController {
   constructor(private readonly areaService: AreaService) {}
 
   @Post()
-  create(@Body() createAreaDto: CreateAreaDto, @Query("regionId") regionId: number) {
-    return this.areaService.create(createAreaDto, regionId);
+  create(@Body() createAreaDto: CreateAreaDto) {
+    const { regionId, ...areaData } = createAreaDto;
+    return this.areaService.create(areaData, regionId);
   }
 
   @Get()

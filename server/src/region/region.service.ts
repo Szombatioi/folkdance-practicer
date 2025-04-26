@@ -19,8 +19,8 @@ export class RegionService {
   async create(data: {name: string}, dialectId: number) {
     //add region to dialect
     const dialect = await this.dialectRepository.findOne({where: {id: dialectId}});
-
-    if(dialect === null){
+    console.log("Service" + dialectId);
+    if(!dialect){
       throw new NotFoundException("Dialect not found.");
     }
     
@@ -46,13 +46,20 @@ export class RegionService {
   }
 
   async update(id: number, newRegionDto: UpdateRegionDto) {
-    try{
-      const region = await this.findOne(id);
-      Object.assign(region, newRegionDto);
-      this.regionsRepository.save(region);
-    } catch(e){
-      throw e;
+    const region = await this.findOne(id);
+    
+    const {newDialectId, ...newRegion} = newRegionDto
+    Object.assign(region, newRegion);
+
+    //find dialect
+    if(newDialectId !== 0) {
+      const dialect = await this.dialectRepository.findOne({where: {id: newDialectId}});
+      if(!dialect) throw new NotFoundException('New dialect not found with id #' + newDialectId.toString());
+  
+      region.dialect = dialect;
     }
+    
+    await this.regionsRepository.save(region);
   }
 
   //TODO: will we need this?

@@ -3,4 +3,5 @@ import { CreateRegionDto } from './create-region.dto';
 
 export class UpdateRegionDto /*extends PartialType(CreateRegionDto)*/ {
     name: string;
+    newDialectId: number = 0;
 }
