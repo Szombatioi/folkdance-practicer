@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MiniDrawer from "./components/drawer";
+// import { SnackbarProvider, useSnackbar } from "./snackbar-context";
+// import CustomSnackbar from "./components/customSnackbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,13 +26,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // const { open, message, severity, closeSnackbar } = useSnackbar();
+
+
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <MiniDrawer>
-          {children}
-        </MiniDrawer>
-      </body>
+      {/* <SnackbarProvider> */}
+        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+          <MiniDrawer>
+            {children}
+          </MiniDrawer>
+          {/* <CustomSnackbar
+                          message={message}
+                          severity={severity}
+                          open={open}
+                          onClose={closeSnackbar}
+                      /> */}
+        </body>
+      {/* </SnackbarProvider> */}
     </html>
   );
 }
