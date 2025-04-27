@@ -27,35 +27,34 @@ def read_csv():
             data.append(dict(row))
     return data, headers
 
-# --- 1. Adat: kis minta táncokról ---
 data, label_fields = read_csv()
 data = shuffle(data, random_state=42)
 
 # label_fields = ["dance_category", "dance_type", "dialect", "region", "area", "land"] #, "dancer"
 
-# --- 2. Tokenizálás ---
+
 tokenizer = AutoTokenizer.from_pretrained("distilbert-base-multilingual-cased")
 # tokenizer = AutoTokenizer.from_pretrained("NYTK/BERT-small-hungarian")
 
 if sys.argv.__contains__("-t"):
     tokenizer = AutoTokenizer.from_pretrained("saved_model/")
 
-# --- 3. Binarizálók minden címkéhez ---
+#binarizers for all labels
 mlbs = {
     label: MultiLabelBinarizer()
     for label in label_fields
 }
 
-# --- 4. Binarizált címkék létrehozása ---
+
 all_label_vectors = {}
 for label in label_fields:
     values = [[entry[label]] for entry in data]
     all_label_vectors[label] = mlbs[label].fit_transform(values)
 
-# --- 5. Címkék összeillesztése egy tömbbé ---
+
 all_labels = np.hstack([all_label_vectors[label] for label in label_fields])
 
-# --- 6. Tokenizálás és dataset készítés ---
+
 def preprocess(entry, label_vector):
     enc = tokenizer(entry["title"], truncation=True, padding="max_length", max_length=32, return_tensors="pt")
     enc = {k: v.squeeze() for k, v in enc.items()}
@@ -76,13 +75,13 @@ if sys.argv.__contains__("-m"):
     model.eval()
     train_model = False
 
-# --- 8. Loss + Trainer ---
+
 if train_model:
     from transformers import TrainingArguments, Trainer
 
     training_args = TrainingArguments(
         output_dir="./results",
-        num_train_epochs=30,
+        num_train_epochs=25,
         per_device_train_batch_size=4,
         logging_dir="./logs",
         logging_steps=1,

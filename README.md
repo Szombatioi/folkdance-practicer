@@ -25,3 +25,6 @@ Start docker container with PostgreSQL:
 
 Start backend: 
 `$ npm run start:dev`
+
+Start predictor:
+`$ uvicorn model_api:app --host 0.0.0.0 --port 3002`
