@@ -6,7 +6,7 @@ export class DanceCategory {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({unique: true})
     name: string;
 
     @OneToMany(() => DanceType, (dt) => dt.danceCategory)

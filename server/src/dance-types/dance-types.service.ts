@@ -15,12 +15,13 @@ export class DanceTypesService {
     private readonly danceCategoriesService: DanceCategoriesService
   ){}
 
-  async create(data: CreateDanceTypeDto, dcId: number) {
+  async create(data: CreateDanceTypeDto) {
     try{
-      const dc = await this.danceCategoriesService.findOne(dcId);
-      const dt = await this.danceTypesRepository.create(data);
+      const {danceCategoryId, ...dtDto} = data;
+      const dc = await this.danceCategoriesService.findOne(danceCategoryId);
+      const dt = this.danceTypesRepository.create(dtDto);
       dt.danceCategory = dc;
-      this.danceTypesRepository.save(dt);
+      return await this.danceTypesRepository.save(dt);
     } catch(e){
       throw e;
     }
@@ -44,10 +45,17 @@ export class DanceTypesService {
   }
 
   async update(id: number, newDto: UpdateDanceTypeDto) {
+    // eslint-disable-next-line no-useless-catch
     try{
       const dt = await this.findOne(id);
-      Object.assign(dt, newDto);
-      this.danceTypesRepository.save(dt);
+      
+      const {newDanceCategoryId, ...data} = newDto;
+      Object.assign(dt, data);
+
+      const dc = await this.danceCategoriesService.findOne(newDanceCategoryId);
+      dt.danceCategory = dc;
+
+      return await this.danceTypesRepository.save(dt);
     } catch(e){
       throw e;
     }

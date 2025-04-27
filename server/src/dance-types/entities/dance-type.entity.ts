@@ -7,7 +7,7 @@ export class DanceType {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({unique: true})
     name: string; //pl. páros tánc, férfitánc, csingerálás, körtánc, karikázó
 
     @OneToMany(() => Dance, (d) => d.danceType)

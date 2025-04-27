@@ -12,9 +12,9 @@ export class DanceCategoriesService {
     private readonly danceCategoryRepository: Repository<DanceCategory>
   ){}
 
-  async create(data: CreateDanceCategoryDto): Promise<any> {
-    await this.danceCategoryRepository.save(
-      await this.danceCategoryRepository.create(data)
+  async create(data: CreateDanceCategoryDto): Promise<DanceCategory> {
+    return await this.danceCategoryRepository.save(
+      this.danceCategoryRepository.create(data)
     );
   }
 
@@ -38,7 +38,6 @@ export class DanceCategoriesService {
     } catch(e) {
       throw e;
     }
-
   }
 
   //TODO: will we need this?
