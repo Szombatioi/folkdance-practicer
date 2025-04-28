@@ -1,34 +1,34 @@
-title;dance_category;dance_type;dialect;region;area;land
-Legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Méra
-Legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Inaktelke
-Legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Bogártelke
-Legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Magyarvista
-Legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Györgyfalva
-Kalotaszegi legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Méra
-Kalotaszegi legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Inaktelke
-Kalotaszegi legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Bogártelke
-Kalotaszegi legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Magyarvista
-Kalotaszegi legényes;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Györgyfalva
-Árus legényese;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Méra
-Mundruc legényese;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Magyarvista
-Poncsa legényese;Férfitánc;Legényes;Erdélyi;Erdély;Kalotaszeg;Bogártelke
-Szatmári verbunk;Férfitánc;Verbunk;Felső-Tiszai;Szatmári;Szatmár;Tyukod
-Szatmári csárdás;Páros tánc;Csárdás;Felső-Tiszai;Szatmári;Szatmár;Tyukod
-Pontozó;Férfitánc;Pontozó;Erdélyi;Erdély;Küküllőmente;Magyarszentbenedek
-Pontozó;Férfitánc;Pontozó;Erdélyi;Erdély;Küküllőmente;Szászcsávás
-Pontozó;Férfitánc;Pontozó;Erdélyi;Erdély;Küküllőmente;Magyarózd
-Pontozó;Férfitánc;Pontozó;Erdélyi;Erdély;Küküllőmente;Magyarlapád
-Magyarszentbenedeki pontozó;Férfitánc;Pontozó;Erdélyi;Erdély;Küküllőmente;Magyarszentbenedek
-Szászcsávási pontozó;Férfitánc;Pontozó;Erdélyi;Erdély;Küküllőmente;Szászcsávás
-Bonchidai román csárdás;Páros tánc;Csárdás;Erdélyi;Erdély;Mezőség;Bonchida
-Bonchidai magyar csárdás;Páros tánc;Csárdás;Erdélyi;Erdély;Mezőség;Bonchida
-Bonchidai Invertita;Páros tánc;Forgatós;Erdélyi;Erdély;Mezőség;Bonchida
-Bonchidai román forgatós;Páros tánc;Forgatós;Erdélyi;Erdély;Mezőség;Bonchida
-Bonchidai román invertita;Páros tánc;Forgatós;Erdélyi;Erdély;Mezőség;Bonchida
-Kalotaszegi román invertita;Páros tánc;Forgatós;Erdélyi;Erdély;Kalotaszeg;null
-Kalotaszegi román invertita;Páros tánc;Forgatós;Erdélyi;Erdély;Kalotaszeg;Szucság
-Szucsági forgatós;Páros tánc;Forgatós;Erdélyi;Erdély;Kalotaszeg;Szucság
-Szucsági román forgatós;Páros tánc;Forgatós;Erdélyi;Erdély;Kalotaszeg;Szucság
-Kalotaszegi invertita;Páros tánc;Forgatós;Erdélyi;Erdély;Kalotaszeg;null
-Mezőszopori invertita;Páros tánc;Forgatós;Erdélyi;Erdély;Mezőség;Mezőszopor
-Szucsági román csárdás;Páros tánc;Csárdás;Erdélyi;Erdély;Kalotaszeg;Szucság
+title;dance_type;area;land
+Legényes;Legényes;Kalotaszeg;Méra
+Legényes;Legényes;Kalotaszeg;Inaktelke
+Legényes;Legényes;Kalotaszeg;Bogártelke
+Legényes;Legényes;Kalotaszeg;Magyarvista
+Legényes;Legényes;Kalotaszeg;Györgyfalva
+Kalotaszegi legényes;Legényes;Kalotaszeg;Méra
+Kalotaszegi legényes;Legényes;Kalotaszeg;Inaktelke
+Kalotaszegi legényes;Legényes;Kalotaszeg;Bogártelke
+Kalotaszegi legényes;Legényes;Kalotaszeg;Magyarvista
+Kalotaszegi legényes;Legényes;Kalotaszeg;Györgyfalva
+Árus legényese;Legényes;Kalotaszeg;Méra
+Mundruc legényese;Legényes;Kalotaszeg;Magyarvista
+Poncsa legényese;Legényes;Kalotaszeg;Bogártelke
+Szatmári verbunk;Verbunk;Szatmár;Tyukod
+Szatmári csárdás;Csárdás;Szatmár;Tyukod
+Pontozó;Pontozó;Küküllőmente;Magyarszentbenedek
+Pontozó;Pontozó;Küküllőmente;Szászcsávás
+Pontozó;Pontozó;Küküllőmente;Magyarózd
+Pontozó;Pontozó;Küküllőmente;Magyarlapád
+Magyarszentbenedeki pontozó;Pontozó;Küküllőmente;Magyarszentbenedek
+Szászcsávási pontozó;Pontozó;Küküllőmente;Szászcsávás
+Bonchidai román csárdás;Csárdás;Mezőség;Bonchida
+Bonchidai magyar csárdás;Csárdás;Mezőség;Bonchida
+Bonchidai Invertita;Forgatós;Mezőség;Bonchida
+Bonchidai román forgatós;Forgatós;Mezőség;Bonchida
+Bonchidai román invertita;Forgatós;Mezőség;Bonchida
+Kalotaszegi román invertita;Forgatós;Kalotaszeg;null
+Kalotaszegi román invertita;Forgatós;Kalotaszeg;Szucság
+Szucsági forgatós;Forgatós;Kalotaszeg;Szucság
+Szucsági román forgatós;Forgatós;Kalotaszeg;Szucság
+Kalotaszegi invertita;Forgatós;Kalotaszeg;null
+Mezőszopori invertita;Forgatós;Mezőség;Mezőszopor
+Szucsági román csárdás;Csárdás;Kalotaszeg;Szucság
