@@ -40,6 +40,14 @@ export class AreaService {
     return area;
   }
 
+  async findOneByName(name: string){
+    const area = await this.areaRepository.findOne({ where: { name }, relations: ['region'] });
+
+    if (!area) throw new NotFoundException("Area not found with name " + name);
+
+    return area;
+  }
+
   async update(id: number, newAreaDto: UpdateAreaDto) {
     const area = await this.findOne(id);
 

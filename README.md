@@ -17,7 +17,12 @@ Frontend variables:
 Install dependencies for both projects:
 `$ npm i`
 
-Install python libs: `uvicorn`, `fastapi`,
+If you are working on Mac, create a virtual environment for the installations:
+`$ python3 -m venv venv` \
+`$ source venv/bin/activate`
+
+Install python libs: \
+`$ pip install -r requirements.txt`
 
 Generate Multi-Label Classifier model with fdp_guesser/trainer.py. Install dependencies:
 `$ ...`
