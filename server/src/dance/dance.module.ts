@@ -15,5 +15,6 @@ import { DanceTypesModule } from 'src/dance-types/dance-types.module';
   ],
   controllers: [DanceController],
   providers: [DanceService],
+  exports: [DanceService]
 })
 export class DanceModule {}

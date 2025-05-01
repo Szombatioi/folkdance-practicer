@@ -23,6 +23,8 @@ import { DanceNote } from './dance-notes/entities/dance-note.entity';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { PracticeModule } from './practice/practice.module';
+import { Practice } from './practice/entities/practice.entity';
 
 
 @Module({
@@ -38,7 +40,7 @@ import { JwtModule } from '@nestjs/jwt';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Dialect, Region, Area, Land, Dance, DanceType, DanceCategory, DanceType, DanceNote, User],
+        entities: [Dialect, Region, Area, Land, Dance, DanceType, DanceCategory, DanceType, DanceNote, User, Practice],
         synchronize: true, //TODO: remove this in production!
       })
     }),
@@ -56,6 +58,7 @@ import { JwtModule } from '@nestjs/jwt';
     DanceCategoriesModule,
     DanceNotesModule,
     UserModule,
+    PracticeModule,
   ],
   controllers: [AppController],
   providers: [AppService, RegionService],
