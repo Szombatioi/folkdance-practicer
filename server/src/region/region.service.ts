@@ -45,6 +45,16 @@ export class RegionService {
     return region;
   }
 
+  async findByName(name: string){
+    const region = await this.regionsRepository.findOne({where: {name}, relations: ['dialect', 'areas']});
+
+    if(!region){
+      throw new NotFoundException('Region not found with name ' + name);
+    }
+
+    return region;
+  }
+
   async update(id: number, newRegionDto: UpdateRegionDto) {
     const region = await this.findOne(id);
     

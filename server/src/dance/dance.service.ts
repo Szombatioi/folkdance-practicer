@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Dance } from './entities/dance.entity';
 import { AreaService } from 'src/area/area.service';
+import { DanceTypesService } from 'src/dance-types/dance-types.service';
 
 @Injectable()
 export class DanceService {
@@ -12,17 +13,23 @@ export class DanceService {
     @InjectRepository(Dance)
     private readonly danceRepository: Repository<Dance>,
 
-    private readonly areaService: AreaService
+    private readonly areaService: AreaService,
+    private readonly danceTypeServiece: DanceTypesService
   ){}
 
   private readonly relations = ['area', 'danceType', 'notes'];
 
-  async create(data: CreateDanceDto, areaId: number) {
+  async create(dataDto: CreateDanceDto) {
     try {
-      const area = await this.areaService.findOne(areaId);
-      const dance = await this.danceRepository.create(data);
+      const {danceTypeId, areaId, landId, ...data} = dataDto;
 
+      const area = await this.areaService.findOne(areaId);
+      const land = landId ? area.lands.find(l => l.id == landId && l.area.id == areaId) ?? null : null;
+      const dance = await this.danceRepository.create(data);
+      const dt = await this.danceTypeServiece.findOne(danceTypeId);
       dance.area = area;
+      if(land) dance.land = land;
+      if(dt) dance.danceType = dt;
       await this.danceRepository.save(dance);
     } catch (e) {
       throw e;

@@ -8,8 +8,8 @@ export class DanceController {
   constructor(private readonly danceService: DanceService) {}
 
   @Post()
-  create(@Body() createDanceDto: CreateDanceDto, @Query("areaId") areaId: number) {
-    return this.danceService.create(createDanceDto, areaId);
+  create(@Body() createDanceDto: CreateDanceDto) {
+    return this.danceService.create(createDanceDto);
   }
 
   @Get()

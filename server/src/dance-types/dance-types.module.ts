@@ -13,5 +13,6 @@ import { DanceCategoriesModule } from 'src/dance-categories/dance-categories.mod
   ],
   controllers: [DanceTypesController],
   providers: [DanceTypesService],
+  exports: [DanceTypesService]
 })
 export class DanceTypesModule {}

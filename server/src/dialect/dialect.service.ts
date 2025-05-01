@@ -60,6 +60,14 @@ export class DialectService {
     return dialect;
   }
 
+  async findByName(name: string) {
+    const dialect = await this.dialectRepository.findOne({where: {name}, relations: ['regions']});
+    if(dialect === null){
+      throw new NotFoundException("Dialect not found with name"+name);
+    }
+    return dialect;
+  }
+
   async update(id: number, newDialectDto: UpdateDialectDto) {
     try{
       let dialect = await this.findOne(id);

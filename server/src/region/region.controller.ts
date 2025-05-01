@@ -24,6 +24,11 @@ export class RegionController {
     return this.regionService.findOne(+id);
   }
 
+  @Get('name/:name')
+  findByName(@Param('name') name: string){
+    return this.regionService.findByName(name);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRegionDto: UpdateRegionDto) {
     return this.regionService.update(+id, updateRegionDto);

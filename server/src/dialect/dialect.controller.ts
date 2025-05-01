@@ -21,6 +21,11 @@ export class DialectController {
     return this.dialectService.findOne(+id);
   }
 
+  @Get('name/:name')
+  findByName(@Param('name') name: string){
+    return this.dialectService.findByName(name);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDialectDto: UpdateDialectDto) {
     return this.dialectService.update(+id, updateDialectDto);

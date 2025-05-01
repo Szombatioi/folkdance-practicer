@@ -13,7 +13,10 @@ export class Dance {
     name: string; //pl. Kalotaszegi legényes, Szatmári verbunk
 
     @ManyToOne(() => Area, (a) => a.dances)
-    area: Area; //pl. Méra, Visa, stb., de lehet simán 1 is vagy 0 is
+    area: Area;
+
+    @ManyToOne(() => Land, (l) => l.dances, {nullable: true})
+    land: Land;
 
     @ManyToOne(() => DanceType, (dt) => dt.dances)
     danceType: DanceType;

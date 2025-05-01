@@ -18,6 +18,9 @@ import { Land } from "@shared/land";
 import { DanceCategory } from "@shared/dance-category";
 import { DanceType } from "@shared/dance-type";
 
+//TODO: if any axios call is null (not found) then handle it
+//e.g. if(dialect) ...
+
 //REGION disabled while dialect is null
 //AREA disabled while region is null
 //...
@@ -30,12 +33,12 @@ import { DanceType } from "@shared/dance-type";
 
 export default function NewDancePage() {
   const [danceName, setDanceName] = useState<string>("");
-  const [danceCategory, setDanceCategory] = useState<string>("");
-  const [danceType, setDanceType] = useState<string>("");
-  const [danceDialect, setDanceDialect] = useState<string>("");
-  const [danceRegion, setDanceRegion] = useState<string>("");
-  const [danceArea, setDanceArea] = useState<string>("");
-  const [danceLand, setDanceLand] = useState<string>("");
+  const [danceCategory, setDanceCategory] = useState<DanceCategory|null>(null);
+  const [danceType, setDanceType] = useState<DanceType|null>(null);
+  const [danceDialect, setDanceDialect] = useState<Dialect|null>(null);
+  const [danceRegion, setDanceRegion] = useState<Region|null>(null);
+  const [danceArea, setDanceArea] = useState<Area|null>(null);
+  const [danceLand, setDanceLand] = useState<Land|null>(null);
 
   const [dialects, setDialects] = useState<Dialect[]>();
   const [regions, setRegions] = useState<Region[]>();
@@ -47,7 +50,10 @@ export default function NewDancePage() {
 
   const handleCreateButtonClick = async () => {
     const payload = {
-      //TODO: create DTO and fill this up
+      name: danceName,
+      areaId: danceArea?.id,
+      landId: danceLand ? danceLand.id : null,
+      danceTypeId: danceType?.id,
     };
     const response = await axios.post(
       process.env.NEXT_PUBLIC_BACKEND_URL + "/dance",
@@ -148,11 +154,11 @@ export default function NewDancePage() {
   }, []);
 
   //wrapper function for setCategory()
-  const _setDanceCategory = async (catName: string) => {
-    setDanceCategory(catName);
+  const _setDanceCategory = async (category: DanceCategory) => {
+    setDanceCategory(category);
 
     const types = await fetchTypes();
-    const filteredTypes = types.filter((t) => t.danceCategory.name == catName);
+    const filteredTypes = types.filter((t) => t.danceCategory.name == category.name);
     setAvailableTypes(filteredTypes);
   };
 
@@ -163,18 +169,18 @@ export default function NewDancePage() {
     return landsRes.data;
   }
 
-  const _setDanceArea = async (areaName: string) => {
-    setDanceArea(areaName);
+  const _setDanceArea = async (area: Area) => {
+    setDanceArea(area);
 
     const lands = await fetchLands();
-    const filteredLands = lands.filter(l => l.area.name === areaName);
+    const filteredLands = lands.filter(l => l.area.name === area.name);
     setAvailableLands(filteredLands);
 
-    if(areaName) setFromArea(areaName);
-    else{
-      setDanceDialect("");
-      setDanceRegion("");
-    }
+    if(area) setFromArea(area);
+    // else{
+    //   setDanceDialect(null);
+    //   setDanceRegion(null);
+    // }
   };
 
   const setPredictions = async (prediction: {
@@ -191,12 +197,13 @@ export default function NewDancePage() {
     >(process.env.NEXT_PUBLIC_BACKEND_URL + "/dance-types");
     const dt = dts.data.find((t) => t.name == prediction.dance_type);
     if (dt && dt.danceCategory) {
-      _setDanceCategory(dt.danceCategory.name);
-      setDanceType(prediction.dance_type);
+      _setDanceCategory(dt.danceCategory);
+      setDanceType(dt);
     }
     //TODO: else snackbar
 
-    setFromArea(prediction.area);
+    const area = await axios.get<Area>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/area/name/${prediction.area}`);
+    if(area) setFromArea(area.data);
     // setDanceLand(prediction.land.length); //TODO: maybe we won't do this afterall...
 
     console.log(danceCategory);
@@ -207,27 +214,30 @@ export default function NewDancePage() {
     console.log(danceLand);
   };
 
-  const setFromArea = async (areaName: string) => {
+  const setFromArea = async (area: Area) => {
     const structureFrom = "area"; //TODO: could be land too...
     //retrieve area id from backend
-    const area = await axios.get<{
-      id: number;
-      name: string /*, TODO others?*/;
-    }>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/area/name/${areaName}`);
+    // const areaRes = await axios.get<{
+    //   id: number;
+    //   name: string /*, TODO others?*/;
+    // }>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/area/name/${area.name}`);
 
-    if (!area.data) {
+    if (!area) {
       //TODO snackbar
       console.log("Area did not found");
       return;
     }
 
     const structure = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/structure/${structureFrom}/${area.data.id}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/structure/${structureFrom}/${area.id}`
     );
-    setDanceArea(areaName);
+    setDanceArea(area);
     //TODO if empty
-    setDanceDialect(structure.data.dialect); //TODO if empty
-    setDanceRegion(structure.data.region); //TODO if empty
+
+    const dialect = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dialect/name/${structure.data.dialect}`);
+    const region = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/region/name/${structure.data.region}`);
+    if(dialect) setDanceDialect(dialect.data); //TODO if empty
+    if(region) setDanceRegion(region.data); //TODO if empty
   }
 
   return (
@@ -268,6 +278,7 @@ export default function NewDancePage() {
                 value={danceName}
                 variant="outlined"
                 label="Tánc neve"
+                required
                 sx={{ width: 300 }}
               />
               <IconButton
@@ -303,18 +314,19 @@ export default function NewDancePage() {
               options={availableCategories || []}
               getOptionLabel={(option) => option.name}
               value={
-                availableCategories?.find((c) => c.name === danceCategory) ||
+                availableCategories?.find((c) => c.name === danceCategory?.name) ||
                 null
               }
               onChange={(e, v) => {
-                _setDanceCategory(v?.name || ""); // update category + filtered types
-                setDanceType(""); // clear DanceType
+                _setDanceCategory(v!); // update category + filtered types
+                setDanceType(null); // clear DanceType
                 // setAvailableTypes([]); // clear options
               }}
               sx={{ flex: 1, marginX: 1 }}
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required
                   label="Tánc kategória"
                   variant="outlined"
                 />
@@ -324,16 +336,17 @@ export default function NewDancePage() {
               disablePortal
               options={availableTypes || []}
               getOptionLabel={(option) => option.name}
-              value={availableTypes?.find((t) => t.name === danceType) || null}
-              onChange={(e, v) => setDanceType(v?.name || "")}
+              value={availableTypes?.find((t) => t.name === danceType?.name) || null}
+              onChange={(e, v) => setDanceType(v!)}
               sx={{ flex: 1, marginX: 1 }}
-              disabled={!danceCategory || danceCategory.length === 0}
+              disabled={!danceCategory || danceCategory.name.length === 0}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant="outlined"
                   label="Tánctípus"
-                  disabled={!danceCategory || danceCategory.length === 0}
+                  required
+                  disabled={!danceCategory || danceCategory.name.length === 0}
                 />
               )}
             />
@@ -351,19 +364,21 @@ export default function NewDancePage() {
           >
             <TextField
               sx={{ marginX: 1, flex: 1 }}
-              onChange={(e) => setDanceDialect(e.target.value)}
-              value={danceDialect}
+              // onChange={(e) => setDanceDialect(e.target.value)}
+              value={danceDialect ? danceDialect?.name : ""}
               variant="outlined"
               label="Dialektus"
               disabled
+              required
             />
             <TextField
               sx={{ marginX: 1, flex: 1 }}
-              onChange={(e) => setDanceRegion(e.target.value)}
-              value={danceRegion}
+              // onChange={(e) => setDanceRegion(e.target.value)}
+              value={danceRegion ? danceRegion?.name : ""}
               variant="outlined"
               label="Régió"
               disabled
+              required
             />
           </div>
 
@@ -388,10 +403,10 @@ export default function NewDancePage() {
               disablePortal
               options={availableAreas || []}
               getOptionLabel={(option) => option.name}
-              value={availableAreas?.find((c) => c.name === danceArea) || null}
+              value={availableAreas?.find((c) => c.name === danceArea?.name) || null}
               onChange={(e, v) => {
-                _setDanceArea(v?.name || "");
-                setDanceLand("");
+                _setDanceArea(v!);
+                setDanceLand(null);
 
                 // _setDanceCategory(v?.name || ""); // update category + filtered types
                 // setDanceType(""); // clear DanceType
@@ -399,7 +414,7 @@ export default function NewDancePage() {
               }}
               sx={{ flex: 1, marginX: 1 }}
               renderInput={(params) => (
-                <TextField {...params} label="Tájegység" variant="outlined" />
+                <TextField {...params} label="Tájegység" variant="outlined" required />
               )}
             />
             {/* <TextField
@@ -413,8 +428,8 @@ export default function NewDancePage() {
               disablePortal
               options={availableLands || []}
               getOptionLabel={(option) => option.name}
-              value={availableLands?.find((t) => t.name === danceLand) || null}
-              onChange={(e, v) => setDanceLand(v?.name || "")}
+              value={availableLands?.find((t) => t.name === danceLand?.name) || null}
+              onChange={(e, v) => setDanceLand(v!)}
               sx={{ flex: 1, marginX: 1 }}
               renderInput={(params) => (
                 <TextField
