@@ -50,8 +50,15 @@ export class DanceService {
 
   async update(id: number, newDto: UpdateDanceDto) {
     try {
+      const {areaId, landId, danceTypeId, ...data} = newDto;
+      
       const dance = await this.findOne(id);
-      Object.assign(dance, newDto);
+      Object.assign(dance, data);
+
+      if(areaId) dance.area = await this.areaService.findOne(areaId);
+      // if(landId)
+      if(danceTypeId) dance.danceType = await this.danceTypeServiece.findOne(danceTypeId);
+
       await this.danceRepository.save(dance);
     } catch (e) {
       throw e;

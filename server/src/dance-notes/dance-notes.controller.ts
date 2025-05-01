@@ -27,8 +27,8 @@ export class DanceNotesController {
     return this.danceNotesService.update(+id, updateDanceNoteDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.danceNotesService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.danceNotesService.remove(+id);
+  // }
 }

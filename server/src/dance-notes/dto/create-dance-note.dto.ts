@@ -1,1 +1,4 @@
-export class CreateDanceNoteDto {}
+export class CreateDanceNoteDto {
+    name: string;
+    danceId: number;
+}
