@@ -41,7 +41,14 @@ export class FiguresService {
     const figure = await this.figureRepository.findOne({
       where: { id },
       relations: {
-        danceNote: true,
+        danceNote: {
+          dance: {
+            area: true,
+            danceType: {
+              danceCategory: true
+            }
+          }
+        },
         figureType: true,
       },
     });

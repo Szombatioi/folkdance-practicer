@@ -36,7 +36,9 @@ export class DanceNotesService {
   async findOne(id: number) {
     const dn = await this.danceNoteRepository.findOne({where: {id},
       relations: {
-        dance: true,
+        dance: {
+          area: true
+        },
         figures: true,
       },
     });

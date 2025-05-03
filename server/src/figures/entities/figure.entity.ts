@@ -10,6 +10,9 @@ export class Figure {
     @Column()
     name: string;
 
+    @Column({nullable: true})
+    description: string;
+
     @ManyToOne(() => DanceNote, (dn) => dn.figures)
     danceNote: DanceNote;
 
