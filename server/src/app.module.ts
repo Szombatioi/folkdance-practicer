@@ -29,6 +29,12 @@ import { FiguresModule } from './figures/figures.module';
 import { Figure } from './figures/entities/figure.entity';
 import { FigureTypesModule } from './figure-types/figure-types.module';
 import { FigureType } from './figure-types/entities/figure-type.entity';
+import { MusicSourceModule } from './music-source/music-source.module';
+import { MusicLyricsModule } from './music-lyrics/music-lyrics.module';
+import { MusicModule } from './music/music.module';
+import { Music } from './music/entities/music.entity';
+import { MusicLyric } from './music-lyrics/entities/music-lyric.entity';
+import { MusicSource } from './music-source/entities/music-source.entity';
 
 
 @Module({
@@ -44,7 +50,7 @@ import { FigureType } from './figure-types/entities/figure-type.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Dialect, Region, Area, Land, Dance, DanceType, DanceCategory, DanceType, DanceNote, User, Practice, Figure, FigureType],
+        entities: [Dialect, Region, Area, Land, Dance, DanceType, DanceCategory, DanceType, DanceNote, User, Practice, Figure, FigureType, Music, MusicLyric, MusicSource],
         synchronize: true, //TODO: remove this in production!
       })
     }),
@@ -65,6 +71,9 @@ import { FigureType } from './figure-types/entities/figure-type.entity';
     PracticeModule,
     FiguresModule,
     FigureTypesModule,
+    MusicSourceModule,
+    MusicLyricsModule,
+    MusicModule,
   ],
   controllers: [AppController],
   providers: [AppService, RegionService],
