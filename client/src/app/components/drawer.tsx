@@ -20,6 +20,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { Accessibility, MusicNote } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
 
 const drawerWidth = 240;
 
@@ -113,6 +115,8 @@ export default function MiniDrawer({children}: MiniDrawerProps) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
+    const router = useRouter();
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -153,7 +157,100 @@ export default function MiniDrawer({children}: MiniDrawerProps) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                <ListItem disablePadding sx={{display: 'block'}}>
+                    <ListItemButton onClick={() => router.push("/")} sx={[
+                                    {
+                                        minHeight: 48,
+                                        px: 2.5,
+                                    },
+                                    open
+                                        ? {
+                                            justifyContent: 'initial',
+                                        }
+                                        : {
+                                            justifyContent: 'center',
+                                        },
+                                ]}
+                            >
+                                <ListItemIcon
+                                    sx={[
+                                        {
+                                            minWidth: 0,
+                                            justifyContent: 'center',
+                                        },
+                                        open
+                                            ? {
+                                                mr: 3,
+                                            }
+                                            : {
+                                                mr: 'auto',
+                                            },
+                                    ]}
+                                >
+                                    <Accessibility />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={"Táncok"}
+                                    sx={[
+                                        open
+                                            ? {
+                                                opacity: 1,
+                                            }
+                                            : {
+                                                opacity: 0,
+                                            },
+                                    ]}
+                                />
+                            </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding sx={{display: 'block'}}>
+                    <ListItemButton onClick={() => router.push("/music")} sx={[
+                                    {
+                                        minHeight: 48,
+                                        px: 2.5,
+                                    },
+                                    open
+                                        ? {
+                                            justifyContent: 'initial',
+                                        }
+                                        : {
+                                            justifyContent: 'center',
+                                        },
+                                ]}
+                            >
+                                <ListItemIcon
+                                    sx={[
+                                        {
+                                            minWidth: 0,
+                                            justifyContent: 'center',
+                                        },
+                                        open
+                                            ? {
+                                                mr: 3,
+                                            }
+                                            : {
+                                                mr: 'auto',
+                                            },
+                                    ]}
+                                >
+                                    <MusicNote />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={"Zenék"}
+                                    sx={[
+                                        open
+                                            ? {
+                                                opacity: 1,
+                                            }
+                                            : {
+                                                opacity: 0,
+                                            },
+                                    ]}
+                                />
+                            </ListItemButton>
+                    </ListItem>
+                    {/* {["Dances", "Music"].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={[
@@ -201,11 +298,11 @@ export default function MiniDrawer({children}: MiniDrawerProps) {
                                 />
                             </ListItemButton>
                         </ListItem>
-                    ))}
+                    ))} */}
                 </List>
-                <Divider />
+                {/* <Divider /> */}
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                    {/* {['All mail', 'Trash', 'Spam'].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={[
@@ -253,7 +350,7 @@ export default function MiniDrawer({children}: MiniDrawerProps) {
                                 />
                             </ListItemButton>
                         </ListItem>
-                    ))}
+                    ))} */}
                 </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
