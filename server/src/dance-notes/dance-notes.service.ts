@@ -39,13 +39,25 @@ export class DanceNotesService {
         dance: {
           area: true
         },
-        figures: true,
+        figures: {
+          figureType: true
+        },
       },
     });
 
     if(!dn) throw new NotFoundException(`Did not found dance note with id #${id}`);
 
     return dn;
+  }
+
+  async findAllByDance(danceId: number){
+    return await this.danceNoteRepository.find({
+      where: {dance: {id: danceId}},
+      relations: {
+        dance: true,
+        figures: true,
+      },
+    });
   }
 
   //TODO: add/remove figure function

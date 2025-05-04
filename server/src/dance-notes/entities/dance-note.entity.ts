@@ -1,6 +1,6 @@
 import { Dance } from "src/dance/entities/dance.entity";
 import { Figure } from "src/figures/entities/figure.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class DanceNote {
@@ -15,4 +15,8 @@ export class DanceNote {
 
     @OneToMany(() => Figure, (f) => f.danceNote)
     figures: Figure[];
+
+
+    @CreateDateColumn()
+    createdAt: Date;
 }

@@ -18,8 +18,13 @@ export class DanceNotesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.danceNotesService.findOne(+id);
+  }
+
+  @Get('dance/:id')
+  findAllByDance(@Param('id') id: number){
+    return this.danceNotesService.findAllByDance(+id);
   }
 
   @Patch(':id')
