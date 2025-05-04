@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MusicLyricsService } from './music-lyrics.service';
 import { MusicLyricsController } from './music-lyrics.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';

@@ -22,6 +22,11 @@ export class MusicController {
     return this.musicService.findOne(+id);
   }
 
+  @Get("area/:id")
+  findByArea(@Param('id') areaId: number){
+    return this.musicService.findByArea(+areaId);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMusicDto: UpdateMusicDto) {
     return this.musicService.update(+id, updateMusicDto);

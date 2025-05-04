@@ -54,7 +54,7 @@ import { MusicSource } from './music-source/entities/music-source.entity';
         synchronize: true, //TODO: remove this in production!
       })
     }),
-    TypeOrmModule.forFeature([Dialect, Region, Area, Land]),
+    TypeOrmModule.forFeature([Dialect, Region, Area, Land, Music]),
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'secret',
       signOptions: { expiresIn: '1d' },

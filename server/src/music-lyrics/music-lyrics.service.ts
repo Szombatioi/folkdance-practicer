@@ -16,12 +16,12 @@ export class MusicLyricsService {
   ) {}
 
   async create(createMusicLyricDto: CreateMusicLyricDto) {
-    const { musicId, ...data } = createMusicLyricDto;
-    const lyric = this.lyricRepository.create(data);
+    // const { musicId, ...data } = createMusicLyricDto;
+    const lyric = this.lyricRepository.create(createMusicLyricDto);
 
-    const music = await this.musicService.findOne(musicId);
-    if(!music) throw new NotFoundException(`Music did not found with id #${musicId}`);
-    lyric.music = music;
+    // const music = await this.musicService.findOne(musicId);
+    // if(!music) throw new NotFoundException(`Music did not found with id #${musicId}`);
+    // lyric.music = music;
 
     return await this.lyricRepository.save(lyric);
   }
@@ -37,13 +37,12 @@ export class MusicLyricsService {
   }
 
   async update(id: number, updateMusicLyricDto: UpdateMusicLyricDto) {
-    const {musicId, ...data} = updateMusicLyricDto;
 
     const lyric = await this.findOne(id);
 
-    Object.assign(lyric, data);
+    Object.assign(lyric, updateMusicLyricDto);
 
-    if(musicId) lyric.music = await this.musicService.findOne(musicId);
+    // if(musicId) lyric.music = await this.musicService.findOne(musicId);
 
     return await this.lyricRepository.save(lyric);
   }

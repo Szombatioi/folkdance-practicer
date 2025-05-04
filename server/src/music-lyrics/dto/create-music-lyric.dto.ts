@@ -1,4 +1,4 @@
 export class CreateMusicLyricDto {
     text: string;
-    musicId: number;
+    // musicId: number; //Info: Music will create it
 }
