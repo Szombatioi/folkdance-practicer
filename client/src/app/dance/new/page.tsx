@@ -17,6 +17,7 @@ import { Area } from "@shared/area";
 import { Land } from "@shared/land";
 import { DanceCategory } from "@shared/dance-category";
 import { DanceType } from "@shared/dance-type";
+import { useRouter } from "next/navigation";
 
 //TODO: if any axios call is null (not found) then handle it
 //e.g. if(dialect) ...
@@ -48,6 +49,8 @@ export default function NewDancePage() {
     useState<DanceCategory[]>();
   const [availableTypes, setAvailableTypes] = useState<DanceType[]>();
 
+  const router = useRouter();
+
   const handleCreateButtonClick = async () => {
     const payload = {
       name: danceName,
@@ -59,6 +62,8 @@ export default function NewDancePage() {
       process.env.NEXT_PUBLIC_BACKEND_URL + "/dance",
       payload
     );
+  
+    if(response.status == 201) router.push("/"); //TODO snackbar
   };
 
   const autoFill = async () => {
@@ -69,7 +74,11 @@ export default function NewDancePage() {
           title: danceName,
         }
       );
-
+      if(prediction.status < 200 || prediction.status >= 300) {
+        //TODO snackbar
+        console.log("Error at autofill")
+        return;
+      }
       setPredictions(prediction.data);
     } catch (error) {
       //TODO: snackbar
@@ -295,7 +304,7 @@ export default function NewDancePage() {
             style={{
               height: "1px",
               width: "50%",
-              borderTop: "1px solid black;",
+              borderTop: "1px solid black",
             }}
           ></div>
 

@@ -1,21 +1,33 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Fab, Typography } from "@mui/material";
 import MiniDrawer from "./components/drawer";
 import DanceBox from "./components/danceBox";
 import { JSX, useEffect, useState } from "react";
 import axios from "axios";
 import Practice from "@shared/practice";
+import { Add } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
+import { Dance } from "@shared/dance";
 
 export default function Home() {
   // const elements: JSX.Element[] = [];
-  const [practices, setPractices] = useState<Practice[]>([]);
+  // const [practices, setPractices] = useState<Practice[]>([]); //TODO valahogy mergeljük a dance-kkel
+  const [dances, setDances] = useState<Dance[]>();
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchDances() {
-      const practiceRes = await axios.get<Practice[]>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/practice`);
-      console.log(practiceRes.data);
-      setPractices(practiceRes.data);
+      const dancesRes = await axios.get<Dance[]>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dance`);
+      if(dancesRes.status === 200){
+        setDances(dancesRes.data);
+      }
+      else{
+        //TODO
+      }
+      // const practiceRes = await axios.get<Practice[]>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/practice`);
+      // console.log(practiceRes.data);
+      // setPractices(practiceRes.data);
       // if(practices.status >= 200 && practices.status < 300){
       //   practices.data.forEach(p => {
       //     elements.push(<DanceBox key={p.id} practice={p} />);
@@ -53,9 +65,13 @@ export default function Home() {
         }}
       >
         <div>
-          {practices.map(p => <DanceBox key={p.id} practice={p}/>)}
+          {dances && dances.map(d => <DanceBox key={d.id} dance={d} lastPractice={new Date()}/>)} { /*TODO lastPractice */ }
         </div>
       </div>
+
+      <Fab onClick={() => router.push("/dance/new")} sx={{position: "fixed", bottom: "16px", right: "16px"}} color="primary" variant="circular">
+        <Add />
+      </Fab>
     </>
   );
 }

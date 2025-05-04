@@ -3,7 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, IconButton, Typography }
 import InformationsTable from "./informationsTable";
 import { ArrowBack } from "@mui/icons-material";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Dance } from "@shared/dance";
@@ -11,6 +11,7 @@ import LoadingSpinner from "@/app/components/loadingSpinner";
 
 export default function DancePage() {
     const params = useParams();
+    const router = useRouter();
     const [dance, setDance] = useState<Dance>();
     useEffect(() => {
         async function fetchDance(){
@@ -30,7 +31,7 @@ export default function DancePage() {
         // TODO btn: Add to collection
         // TODO btn: Start practice session
         dance ? <div>
-            <IconButton>
+            <IconButton onClick={() => router.back()}>
                 <ArrowBack />
             </IconButton>
             <Typography sx={{marginBottom: 2}} variant="h3" textAlign={"center"}>{dance?.danceType.name}: {dance?.name}</Typography>
