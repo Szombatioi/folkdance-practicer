@@ -1,5 +1,6 @@
 import { Dance } from "src/dance/entities/dance.entity";
 import { Land } from "src/land/entities/land.entity";
+import { Music } from "src/music/entities/music.entity";
 import { Region } from "src/region/entities/region.entity";
 import {
   Column,
@@ -27,4 +28,7 @@ export class Area {
 
   @OneToMany(() => Dance, (d) => d.area)
   dances: Dance[];
+
+  @OneToMany(() => Music, (m) => m.area)
+  musics: Music[];
 }

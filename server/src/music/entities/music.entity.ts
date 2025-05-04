@@ -1,6 +1,7 @@
+import { Area } from "src/area/entities/area.entity";
 import { MusicLyric } from "src/music-lyrics/entities/music-lyric.entity";
 import { MusicSource } from "src/music-source/entities/music-source.entity";
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Music {
@@ -15,6 +16,9 @@ export class Music {
 
     @OneToMany(() => MusicLyric, (ml) => ml.music)
     lyrics: MusicLyric[];
+
+    @ManyToOne(() => Area, (a) => a.musics)
+    area: Area;
 
     //TODO: tempo?
     //type?
