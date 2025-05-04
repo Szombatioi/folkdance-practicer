@@ -8,5 +8,6 @@ import { MusicSource } from './entities/music-source.entity';
   imports: [TypeOrmModule.forFeature([MusicSource])],
   controllers: [MusicSourceController],
   providers: [MusicSourceService],
+  exports: [MusicSourceService]
 })
 export class MusicSourceModule {}
