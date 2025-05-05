@@ -4,17 +4,17 @@ import TableRow from "@mui/material/TableRow";
 
 export default function InformationsTable() {
     const areasAndOrLands = true ? (
-        <TableRow> {/*Tájegység*/}
+        <TableRow key={"area"}> {/*Tájegység*/}
             <TableCell style={{ borderBottom: '1px solid grey' }}>Tájegység</TableCell>
             <TableCell style={{ borderBottom: '1px solid grey' }}>Érték</TableCell>
         </TableRow>
     ) : (
         <>
-            <TableRow> {/*Tájegység*/}
+            <TableRow key={"area"}> {/*Tájegység*/}
                 <TableCell>Tájegység</TableCell>
                 <TableCell>Érték</TableCell>
             </TableRow>
-            <TableRow> {/*Falu*/}
+            <TableRow key={"village"}> {/*Falu*/}
                 <TableCell style={{ borderBottom: '1px solid grey' }}>Település</TableCell>
                 <TableCell style={{ borderBottom: '1px solid grey' }}>Érték</TableCell>
             </TableRow>
@@ -22,7 +22,7 @@ export default function InformationsTable() {
     );
 
     return (
-        <Accordion elevation={3} sx={{ width: '60%', justifySelf: 'center', alignSelf: 'center' }}>
+        <Accordion elevation={3} sx={{ width: '60%', justifySelf: 'center', alignSelf: 'center', margin: "1.5rem" }}>
             <AccordionSummary>
                 <Typography variant="h5">Információ</Typography>
             </AccordionSummary>

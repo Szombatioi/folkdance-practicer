@@ -20,20 +20,18 @@ export class DanceService {
   private readonly relations = ['area', 'danceType', 'notes'];
 
   async create(dataDto: CreateDanceDto) {
-    try {
-      const {danceTypeId, areaId, landId, ...data} = dataDto;
+    const {danceTypeId, areaId, landId, ...data} = dataDto;
 
       const area = await this.areaService.findOne(areaId);
-      const land = landId ? area.lands.find(l => l.id == landId && l.area.id == areaId) ?? null : null;
+      console.log(area);
+      console.log(landId);
+      const land = landId ? area.lands.find(l => l.id == landId ) ?? null : null;
       const dance = await this.danceRepository.create(data);
       const dt = await this.danceTypeServiece.findOne(danceTypeId);
       dance.area = area;
       if(land) dance.land = land;
       if(dt) dance.danceType = dt;
       await this.danceRepository.save(dance);
-    } catch (e) {
-      throw e;
-    }
   }
 
   async findAll() {

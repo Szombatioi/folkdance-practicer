@@ -34,4 +34,4 @@ Start backend:
 `$ npm run start:dev`
 
 Start predictor:
-`$ uvicorn <python script>:app --host 0.0.0.0 --port 3002`
+`$ uvicorn service:app --host 0.0.0.0 --port 3002`

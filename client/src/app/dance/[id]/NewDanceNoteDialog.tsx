@@ -3,9 +3,9 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { Dance } from "@shared/dance";
 import axios from "axios";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
-export default function NewDanceNoteDialog({open, setOpen, dance}: {open: boolean, setOpen: Dispatch<SetStateAction<boolean>>,dance: Dance}){
+export default function NewDanceNoteDialog({open, setOpen, dance}: {open: boolean, setOpen: (value: boolean) => void/*Dispatch<SetStateAction<boolean>>*/,dance: Dance}){
     // const [open, setOpen] = useState<boolean>(false)
     const [title, setTitle] = useState<string>("");
 

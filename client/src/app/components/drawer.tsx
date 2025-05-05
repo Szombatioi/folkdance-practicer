@@ -20,8 +20,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { Accessibility, Category, Landscape, MusicNote } from "@mui/icons-material";
+import { Accessibility, ArrowUpward, Category, ExpandLess, ExpandMore, Landscape, MusicNote, Upcoming } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import { Collapse } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -114,15 +115,21 @@ interface MiniDrawerProps {
 export default function MiniDrawer({ children }: MiniDrawerProps) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [landCollapseOpen, setLandCollapseOpen] = React.useState(false);
+
+const _setOpen = (open: boolean) => {
+    setOpen(open);
+    setLandCollapseOpen(false);
+}
 
   const router = useRouter();
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    _setOpen(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    _setOpen(false);
   };
 
   return (
@@ -171,11 +178,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 },
                 open
                   ? {
-                      justifyContent: "initial",
-                    }
+                    justifyContent: "initial",
+                  }
                   : {
-                      justifyContent: "center",
-                    },
+                    justifyContent: "center",
+                  },
               ]}
             >
               <ListItemIcon
@@ -186,11 +193,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                   },
                   open
                     ? {
-                        mr: 3,
-                      }
+                      mr: 3,
+                    }
                     : {
-                        mr: "auto",
-                      },
+                      mr: "auto",
+                    },
                 ]}
               >
                 <Accessibility />
@@ -200,11 +207,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 sx={[
                   open
                     ? {
-                        opacity: 1,
-                      }
+                      opacity: 1,
+                    }
                     : {
-                        opacity: 0,
-                      },
+                      opacity: 0,
+                    },
                 ]}
               />
             </ListItemButton>
@@ -220,11 +227,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 },
                 open
                   ? {
-                      justifyContent: "initial",
-                    }
+                    justifyContent: "initial",
+                  }
                   : {
-                      justifyContent: "center",
-                    },
+                    justifyContent: "center",
+                  },
               ]}
             >
               <ListItemIcon
@@ -235,11 +242,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                   },
                   open
                     ? {
-                        mr: 3,
-                      }
+                      mr: 3,
+                    }
                     : {
-                        mr: "auto",
-                      },
+                      mr: "auto",
+                    },
                 ]}
               >
                 <MusicNote />
@@ -249,11 +256,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 sx={[
                   open
                     ? {
-                        opacity: 1,
-                      }
+                      opacity: 1,
+                    }
                     : {
-                        opacity: 0,
-                      },
+                      opacity: 0,
+                    },
                 ]}
               />
             </ListItemButton>
@@ -269,11 +276,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 },
                 open
                   ? {
-                      justifyContent: "initial",
-                    }
+                    justifyContent: "initial",
+                  }
                   : {
-                      justifyContent: "center",
-                    },
+                    justifyContent: "center",
+                  },
               ]}
             >
               <ListItemIcon
@@ -284,11 +291,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                   },
                   open
                     ? {
-                        mr: 3,
-                      }
+                      mr: 3,
+                    }
                     : {
-                        mr: "auto",
-                      },
+                      mr: "auto",
+                    },
                 ]}
               >
                 <Category />
@@ -298,11 +305,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 sx={[
                   open
                     ? {
-                        opacity: 1,
-                      }
+                      opacity: 1,
+                    }
                     : {
-                        opacity: 0,
-                      },
+                      opacity: 0,
+                    },
                 ]}
               />
             </ListItemButton>
@@ -317,11 +324,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 },
                 open
                   ? {
-                      justifyContent: "initial",
-                    }
+                    justifyContent: "initial",
+                  }
                   : {
-                      justifyContent: "center",
-                    },
+                    justifyContent: "center",
+                  },
               ]}
             >
               <ListItemIcon
@@ -332,11 +339,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                   },
                   open
                     ? {
-                        mr: 3,
-                      }
+                      mr: 3,
+                    }
                     : {
-                        mr: "auto",
-                      },
+                      mr: "auto",
+                    },
                 ]}
               >
                 <Category />
@@ -346,19 +353,20 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 sx={[
                   open
                     ? {
-                        opacity: 1,
-                      }
+                      opacity: 1,
+                    }
                     : {
-                        opacity: 0,
-                      },
+                      opacity: 0,
+                    },
                 ]}
               />
             </ListItemButton>
           </ListItem>
           <Divider />
+          
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
-              onClick={() => router.push("/dialect/new")}
+              onClick={() => router.push("/figure/type/new")}
               sx={[
                 {
                   minHeight: 48,
@@ -366,11 +374,11 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                 },
                 open
                   ? {
-                      justifyContent: "initial",
-                    }
+                    justifyContent: "initial",
+                  }
                   : {
-                      justifyContent: "center",
-                    },
+                    justifyContent: "center",
+                  },
               ]}
             >
               <ListItemIcon
@@ -381,176 +389,258 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
                   },
                   open
                     ? {
-                        mr: 3,
-                      }
+                      mr: 3,
+                    }
                     : {
-                        mr: "auto",
-                      },
+                      mr: "auto",
+                    },
                 ]}
               >
-                <Landscape />
+                <Category />
               </ListItemIcon>
               <ListItemText
-                primary={"Dialektusok"}
+                primary={"Figura típusok"}
                 sx={[
                   open
                     ? {
-                        opacity: 1,
-                      }
+                      opacity: 1,
+                    }
                     : {
-                        opacity: 0,
-                      },
+                      opacity: 0,
+                    },
                 ]}
               />
             </ListItemButton>
           </ListItem>
+          <Divider />
+          <ListItemButton onClick={() => setLandCollapseOpen(!landCollapseOpen)}>
+            <ListItemIcon sx={[
+                  {
+                    minWidth: 0,
+                    justifyContent: "center",
+                  },
+                  open
+                    ? {
+                      mr: 3,
+                    }
+                    : {
+                      mr: "auto",
+                    },
+                ]}>
+              <Landscape />
+            </ListItemIcon>
+            <ListItemText sx={[
+                  open
+                    ? {
+                      opacity: 1,
+                      paddingRight: 3,
+                    }
+                    : {
+                      opacity: 0,
+                    },
+                ]} primary={"Földrajzi egységek"} />
+            {open && (landCollapseOpen ? <ExpandLess /> : <ExpandMore />)}
 
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              onClick={() => router.push("/region/new")}
-              sx={[
-                {
-                  minHeight: 48,
-                  px: 2.5,
-                },
-                open
-                  ? {
-                      justifyContent: "initial",
-                    }
-                  : {
-                      justifyContent: "center",
+          </ListItemButton>
+          <Collapse in={landCollapseOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding sx={{ pl: 2 }}>
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  onClick={() => router.push("/dialect/new")}
+                  sx={[
+                    {
+                      minHeight: 48,
+                      px: 2.5,
                     },
-              ]}
-            >
-              <ListItemIcon
-                sx={[
-                  {
-                    minWidth: 0,
-                    justifyContent: "center",
-                  },
-                  open
-                    ? {
-                        mr: 3,
+                    open
+                      ? {
+                        justifyContent: "initial",
                       }
-                    : {
-                        mr: "auto",
+                      : {
+                        justifyContent: "center",
                       },
-                ]}
-              >
-                <Landscape />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Régiók"}
-                sx={[
-                  open
-                    ? {
-                        opacity: 1,
-                      }
-                    : {
-                        opacity: 0,
+                  ]}
+                >
+                  <ListItemIcon
+                    sx={[
+                      {
+                        minWidth: 0,
+                        justifyContent: "center",
                       },
-                ]}
-              />
-            </ListItemButton>
-          </ListItem>
+                      open
+                        ? {
+                          mr: 3,
+                        }
+                        : {
+                          mr: "auto",
+                        },
+                    ]}
+                  >
+                    <Landscape />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"Dialektusok"}
+                    sx={[
+                      open
+                        ? {
+                          opacity: 1,
+                        }
+                        : {
+                          opacity: 0,
+                        },
+                    ]}
+                  />
+                </ListItemButton>
+              </ListItem>
 
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              onClick={() => router.push("/area/new")}
-              sx={[
-                {
-                  minHeight: 48,
-                  px: 2.5,
-                },
-                open
-                  ? {
-                      justifyContent: "initial",
-                    }
-                  : {
-                      justifyContent: "center",
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  onClick={() => router.push("/region/new")}
+                  sx={[
+                    {
+                      minHeight: 48,
+                      px: 2.5,
                     },
-              ]}
-            >
-              <ListItemIcon
-                sx={[
-                  {
-                    minWidth: 0,
-                    justifyContent: "center",
-                  },
-                  open
-                    ? {
-                        mr: 3,
+                    open
+                      ? {
+                        justifyContent: "initial",
                       }
-                    : {
-                        mr: "auto",
+                      : {
+                        justifyContent: "center",
                       },
-                ]}
-              >
-                <Landscape />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Tájegységek"}
-                sx={[
-                  open
-                    ? {
-                        opacity: 1,
-                      }
-                    : {
-                        opacity: 0,
+                  ]}
+                >
+                  <ListItemIcon
+                    sx={[
+                      {
+                        minWidth: 0,
+                        justifyContent: "center",
                       },
-                ]}
-              />
-            </ListItemButton>
-          </ListItem>
+                      open
+                        ? {
+                          mr: 3,
+                        }
+                        : {
+                          mr: "auto",
+                        },
+                    ]}
+                  >
+                    <Landscape />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"Régiók"}
+                    sx={[
+                      open
+                        ? {
+                          opacity: 1,
+                        }
+                        : {
+                          opacity: 0,
+                        },
+                    ]}
+                  />
+                </ListItemButton>
+              </ListItem>
 
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              onClick={() => router.push("/land/new")}
-              sx={[
-                {
-                  minHeight: 48,
-                  px: 2.5,
-                },
-                open
-                  ? {
-                      justifyContent: "initial",
-                    }
-                  : {
-                      justifyContent: "center",
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  onClick={() => router.push("/area/new")}
+                  sx={[
+                    {
+                      minHeight: 48,
+                      px: 2.5,
                     },
-              ]}
-            >
-              <ListItemIcon
-                sx={[
-                  {
-                    minWidth: 0,
-                    justifyContent: "center",
-                  },
-                  open
-                    ? {
-                        mr: 3,
+                    open
+                      ? {
+                        justifyContent: "initial",
                       }
-                    : {
-                        mr: "auto",
+                      : {
+                        justifyContent: "center",
                       },
-                ]}
-              >
-                <Landscape />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Települések"}
-                sx={[
-                  open
-                    ? {
-                        opacity: 1,
+                  ]}
+                >
+                  <ListItemIcon
+                    sx={[
+                      {
+                        minWidth: 0,
+                        justifyContent: "center",
+                      },
+                      open
+                        ? {
+                          mr: 3,
+                        }
+                        : {
+                          mr: "auto",
+                        },
+                    ]}
+                  >
+                    <Landscape />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"Tájegységek"}
+                    sx={[
+                      open
+                        ? {
+                          opacity: 1,
+                        }
+                        : {
+                          opacity: 0,
+                        },
+                    ]}
+                  />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  onClick={() => router.push("/land/new")}
+                  sx={[
+                    {
+                      minHeight: 48,
+                      px: 2.5,
+                    },
+                    open
+                      ? {
+                        justifyContent: "initial",
                       }
-                    : {
-                        opacity: 0,
+                      : {
+                        justifyContent: "center",
                       },
-                ]}
-              />
-            </ListItemButton>
-          </ListItem>
+                  ]}
+                >
+                  <ListItemIcon
+                    sx={[
+                      {
+                        minWidth: 0,
+                        justifyContent: "center",
+                      },
+                      open
+                        ? {
+                          mr: 3,
+                        }
+                        : {
+                          mr: "auto",
+                        },
+                    ]}
+                  >
+                    <Landscape />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"Települések"}
+                    sx={[
+                      open
+                        ? {
+                          opacity: 1,
+                        }
+                        : {
+                          opacity: 0,
+                        },
+                    ]}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Collapse>
           {/* {["Dances", "Music"].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton

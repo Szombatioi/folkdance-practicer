@@ -1,5 +1,5 @@
 export class CreateFigureDto {
-    name: string;
+    name: string | undefined;
     description: string | undefined;
     danceNoteId: number;
     figureTypeId: number;

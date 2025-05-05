@@ -26,6 +26,17 @@ export default function DancePage() {
   const [danceNotes, setDanceNotes] = useState<DanceNote[]>();
 
   const [open, setOpen] = useState<boolean>(false);
+  const _setOpen = (value: boolean) => {
+    setOpen(value);
+    fetchDanceNotes();
+  }
+
+  async function fetchDanceNotes() {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/dance-notes/dance/${params.id}`
+    );
+    setDanceNotes(res.data);
+  }
 
   useEffect(() => {
     async function fetchDance() {
@@ -35,12 +46,7 @@ export default function DancePage() {
       setDance(danceRes.data);
     }
 
-    async function fetchDanceNotes() {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/dance-notes/dance/${params.id}`
-      );
-      setDanceNotes(res.data);
-    }
+    
 
     fetchDance();
     fetchDanceNotes();
@@ -58,8 +64,10 @@ export default function DancePage() {
           {dance?.danceType.name}: {dance?.name}
         </Typography>
         <InformationsTable /> {/*TODO*/}
+        
         {/* Ide jönnek a note-ok */}
-        <Typography sx={{ marginTop: "1.5rem", marginBottom: "0.75rem", marginLeft: ".5rem"}} variant="h5">
+        {danceNotes && danceNotes?.length > 0 ? (<>
+          <Typography sx={{ marginTop: "1.5rem", marginBottom: "0.75rem", marginLeft: ".5rem"}} variant="h5">
           Jegyzetek
         </Typography>
         {danceNotes?.map((note, index) => (
@@ -70,7 +78,7 @@ export default function DancePage() {
             <Typography>{new Date(note.createdAt).getFullYear().toString() ?? ""}</Typography>
             <Typography>{note.figures.length} figura</Typography>
           </Paper>
-        ))}
+        ))}</>) : (<Typography variant="h5" align="center">Még nincs jegyzeted, adj hozzá a lenti gombbal</Typography>)}
         <Fab
           onClick={() => setOpen(true)}
           sx={{ position: "fixed", bottom: "16px", right: "16px" }}
@@ -79,7 +87,7 @@ export default function DancePage() {
         >
           <Add />
         </Fab>
-        <NewDanceNoteDialog open={open} setOpen={setOpen} dance={dance}/>
+        <NewDanceNoteDialog open={open} setOpen={_setOpen} dance={dance}/>
         {/* TODO: Ide jönnek a figurák, csoportokba foglalva */}
         {/* for ciklus */}
         {/* <Accordion defaultExpanded elevation={3} sx={{ width: '60%', justifySelf: 'center', alignSelf: 'center', borderRadius: '8px', marginTop: '1rem' }}>

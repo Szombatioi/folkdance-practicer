@@ -26,18 +26,18 @@ export default function MusicAreaPage() {
     fetchMusic();
   }, []);
 
-  return <div style={{width: "100%", height: "100%", display: 'flex', justifyContent: "center", alignItems: "center"}}>
-  <div style={{width: "100%"}}>
-  <IconButton style={{margin: "1rem"}} onClick={() => router.back()}>
-                <ArrowBack />
-            </IconButton>
-  <div style={{ width: "100%", display: "flex", flexWrap: "wrap", gap: "16px" }}>
-          {musics?.map((music, index) => (
-            <div key={index} style={{minWidth: "30%", maxWidth: "30%", flex: "1 0 30%"}}>
-              <MusicBox music={music} />
-            </div>
-          ))}
-        </div>
-  </div>
+  return <div style={{ display: 'flex', justifyContent: "center", alignItems: "center" }}>
+    <div style={{ width: "100%" }}>
+      <IconButton style={{ margin: "1rem" }} onClick={() => router.back()}>
+        <ArrowBack />
+      </IconButton>
+      <div style={{ width: "100%", display: "flex", flexWrap: "wrap", gap: "16px" }}>
+        {musics?.map((music, index) => (
+          <div key={index} style={{ minWidth: "30%", maxWidth: "30%", flex: "1 0 30%" }}>
+            <MusicBox music={music} />
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 }

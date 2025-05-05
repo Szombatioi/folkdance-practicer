@@ -26,7 +26,7 @@ export default function NewFigureTypePage() {
         <>
             <Box justifySelf="center" alignSelf="center" >
                 <Paper elevation={3} sx={{ alignItems: "center", paddingY: 4, paddingX: 8, flexDirection: "column", display: "flex", gap: 2, flexGrow: 0 }}>
-                    <Typography variant="h4" align="center">Új figure típus felvétele</Typography>
+                    <Typography variant="h4" align="center">Új figura típus felvétele</Typography>
                     <TextField onChange={(e) => setFigureTypeName(e.target.value)} value={figureTypeName} variant="outlined" placeholder="Típus neve"></TextField>
                     <Button onClick={() => handleCreateButton()} variant="contained">Létrehozás</Button>
                 </Paper>

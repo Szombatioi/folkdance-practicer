@@ -33,7 +33,10 @@ export class AreaService {
   }
 
   async findOne(id: number) {
-    const area = await this.areaRepository.findOne({ where: { id }, relations: ['region'] });
+    const area = await this.areaRepository.findOne({ where: { id }, relations: {
+      region: true,
+      lands: true,
+    } });
 
     if (!area) throw new NotFoundException("Area not found with id #" + id.toString());
 
