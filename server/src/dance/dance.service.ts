@@ -39,7 +39,17 @@ export class DanceService {
   }
 
   async findOne(id: number) {
-    const dance = await this.danceRepository.findOne({where: {id}, relations: this.relations})
+    const dance = await this.danceRepository.findOne({where: {id}, relations: {
+      area: true,
+      danceType: {
+        danceCategory: true
+      },
+      notes: {
+        figures: {
+          figureType: true
+        }
+      }
+    }})
 
     if(!dance) throw new NotFoundException("Dance not found with id #" + id.toString());
 

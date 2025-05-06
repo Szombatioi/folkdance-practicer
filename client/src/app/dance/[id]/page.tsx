@@ -61,9 +61,9 @@ export default function DancePage() {
           <ArrowBack />
         </IconButton>
         <Typography sx={{ marginBottom: 2 }} variant="h3" textAlign={"center"}>
-          {dance?.danceType.name}: {dance?.name}
+          {dance?.name}
         </Typography>
-        <InformationsTable /> {/*TODO*/}
+        <InformationsTable dance={dance} /> {/*TODO*/}
         
         {/* Ide jönnek a note-ok */}
         {danceNotes && danceNotes?.length > 0 ? (<>

@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Figure } from "@shared/figure";
 import InformationsTable from "./informationsTable";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ import LoadingSpinner from "@/app/components/loadingSpinner";
 
 export default function Dance() {
   const params = useParams();
+  const router = useRouter();
   const [figure, setFigure] = useState<Figure | undefined>();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function Dance() {
 
   return figure ? (
     <div>
-      <IconButton>
+      <IconButton onClick={() => router.back()}>
         <ArrowBack />
       </IconButton>
       <Typography

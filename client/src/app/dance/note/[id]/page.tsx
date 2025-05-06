@@ -1,6 +1,6 @@
 "use client";
 import { Add, ArrowBack } from "@mui/icons-material";
-import { Fab, IconButton, List, ListItem, Tooltip, Typography } from "@mui/material";
+import { Fab, IconButton, Link, List, ListItem, Tooltip, Typography } from "@mui/material";
 import { DanceNote } from "@shared/dance-note";
 import { FigureType } from "@shared/figure-type";
 import axios from "axios";
@@ -70,7 +70,7 @@ export default function NotePage() {
                 danceNote.figures.filter(f => f.figureType.id === f_type.id).map((figure, figure_index) => (
                   <div key={figure_index}>
                     {figure.name.length > 0 ? 
-                    <Typography color="#2F5496" variant="h5">{figure.name}</Typography> : <></>}
+                    <Link href={`/figure/${figure.id}`}><Typography color="#2F5496" variant="h5">{figure.name}</Typography></Link> : <></>}
                     {figure.description && <>
                       <ul style={{ marginLeft: "2rem" }}>
                         {figure.description.split('\n').filter(line => line.length > 0).map((line, idx) => (
