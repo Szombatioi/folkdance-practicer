@@ -1,7 +1,12 @@
 "use client";
 import LoadingSpinner from "@/app/components/loadingSpinner";
-import { Label } from "@mui/icons-material";
-import {Table, TableBody, TableCell, TableHead, TableRow, 
+import { Edit, Label } from "@mui/icons-material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Box,
   Button,
   InputLabel,
@@ -11,26 +16,32 @@ import {Table, TableBody, TableCell, TableHead, TableRow,
   TableContainer,
   TextField,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { Area } from "@shared/area";
 import { Dialect } from "@shared/dialect";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import EditAreaDialog from "./EditAreaDialog";
 
 export default function NewareaPage() {
   const [areaName, setareaName] = useState<string>("");
   const [regionId, setregionId] = useState<number>(0); //TODO: get regions from server and set the id
-  const [regions, setregions] = useState<{ id: number; name: string, dialect: Dialect }[]>([]); //TODO: create region type
+  const [regions, setregions] = useState<
+    { id: number; name: string; dialect: Dialect }[]
+  >([]); //TODO: create region type
 
   const [areas, setAreas] = useState<Area[]>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedArea, setSelectedArea] = useState<Area | null>(null);
 
   const fetchAreas = async () => {
-      const response = await axios.get("http://localhost:3001/area");
-      if (response.status >= 200 && response.status < 300) {
-          setAreas(response.data);
-      }
-  }
+    const response = await axios.get("http://localhost:3001/area");
+    if (response.status >= 200 && response.status < 300) {
+      setAreas(response.data);
+    }
+  };
 
   const router = useRouter();
 
@@ -151,7 +162,7 @@ export default function NewareaPage() {
               {areas.length > 0 && (
                 <TableContainer
                   style={{
-                    width: "300px",
+                    width: "450px",
                     border: "1px solid grey",
                     borderRadius: "8px",
                   }}
@@ -159,12 +170,10 @@ export default function NewareaPage() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                      <TableCell colSpan={2} align="center">
-                          Tájegység neve
-                        </TableCell>
-                        <TableCell align="center">
-                          Régió neve
-                        </TableCell>
+                        <TableCell>#</TableCell>
+                        <TableCell align="center">Tájegység neve</TableCell>
+                        <TableCell align="center">Régió neve</TableCell>
+                        <TableCell></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -174,7 +183,19 @@ export default function NewareaPage() {
                             {index + 1}
                           </TableCell>
                           <TableCell align="center">{area.name}</TableCell>
-                          <TableCell align="center">{area.region.name}</TableCell>
+                          <TableCell align="center">
+                            {area.region.name}
+                          </TableCell>
+                          <TableCell>
+                            <IconButton
+                              onClick={() => {
+                                setSelectedArea(area);
+                                setDialogOpen(true);
+                              }}
+                            >
+                              <Edit />
+                            </IconButton>
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -183,6 +204,14 @@ export default function NewareaPage() {
               )}
             </Paper>
           </Box>
+          <EditAreaDialog
+            area={selectedArea}
+            open={dialogOpen}
+            onClose={() => {
+              setDialogOpen(false);
+              fetchAreas();
+            }}
+          />
         </>
       )}
     </>

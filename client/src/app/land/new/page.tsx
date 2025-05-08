@@ -1,9 +1,10 @@
 "use client";
 import LoadingSpinner from "@/app/components/loadingSpinner";
-import { Label } from "@mui/icons-material";
+import { Edit, Label } from "@mui/icons-material";
 import {
   Box,
   Button,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -22,6 +23,7 @@ import { Region } from "@shared/region";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import EditLandDialog from "./EditLandDialog";
 
 export default function NewlandPage() {
   const [landName, setlandName] = useState<string>("");
@@ -31,8 +33,10 @@ export default function NewlandPage() {
   const router = useRouter();
 
   const [lands, setLands] = useState<Land[]>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedLand, setSelectedLand] = useState<Land | null>(null);
 
-  const fetchRegions = async () => {
+  const fetchLands = async () => {
     const response = await axios.get("http://localhost:3001/land");
     if (response.status >= 200 && response.status < 300) {
       setLands(response.data);
@@ -150,13 +154,13 @@ export default function NewlandPage() {
               <Typography variant="h4" align="center">
                 Települések lekérdezése
               </Typography>
-              <Button onClick={() => fetchRegions()} variant="contained">
+              <Button onClick={() => fetchLands()} variant="contained">
                 Lekérdezés
               </Button>
               {lands.length > 0 && (
                 <TableContainer
                   style={{
-                    width: "300px",
+                    width: "450px",
                     border: "1px solid grey",
                     borderRadius: "8px",
                   }}
@@ -164,10 +168,12 @@ export default function NewlandPage() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell colSpan={2} align="center">
+                        <TableCell>#</TableCell>
+                        <TableCell align="center">
                           Település neve
                         </TableCell>
                         <TableCell align="center">Tájegység neve</TableCell>
+                        <TableCell></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -180,6 +186,14 @@ export default function NewlandPage() {
                           <TableCell align="center">
                             {land.area.name}
                           </TableCell>
+                          <TableCell>
+                            <IconButton onClick={() => {
+                              setSelectedLand(land);
+                              setDialogOpen(true);
+                            }}>
+                              <Edit />
+                            </IconButton>
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -188,6 +202,7 @@ export default function NewlandPage() {
               )}
             </Paper>
           </Box>
+          <EditLandDialog land={selectedLand} open={dialogOpen} onClose={() => {setDialogOpen(false); fetchLands();}} />
         </>
       )}
     </>

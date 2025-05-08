@@ -1,9 +1,10 @@
 "use client";
 import LoadingSpinner from "@/app/components/loadingSpinner";
-import { Label } from "@mui/icons-material";
+import { Edit, Label } from "@mui/icons-material";
 import {
   Box,
   Button,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -21,6 +22,7 @@ import { Region } from "@shared/region";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import EditRegionDialog from "./EditRegionDialog";
 
 export default function NewregionPage() {
   const [regionName, setRegionName] = useState<string>("");
@@ -28,6 +30,8 @@ export default function NewregionPage() {
   const [dialects, setDialects] = useState<{ id: number; name: string }[]>([]); //TODO: create dialect type
 
   const [regions, setRegions] = useState<Region[]>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
 
   const fetchRegions = async () => {
     const response = await axios.get("http://localhost:3001/region");
@@ -154,7 +158,7 @@ export default function NewregionPage() {
               {regions.length > 0 && (
                 <TableContainer
                   style={{
-                    width: "300px",
+                    width: "450px",
                     border: "1px solid grey",
                     borderRadius: "8px",
                   }}
@@ -162,10 +166,14 @@ export default function NewregionPage() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell colSpan={2} align="center">
+                        <TableCell>
+                          #
+                        </TableCell>
+                        <TableCell align="center">
                           Régió neve
                         </TableCell>
                         <TableCell align="center">Dialektus neve</TableCell>
+                        <TableCell align="center"></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -178,6 +186,14 @@ export default function NewregionPage() {
                           <TableCell align="center">
                             {region.dialect.name}
                           </TableCell>
+                          <TableCell align="center">
+                            <IconButton onClick={() => {
+                              setSelectedRegion(region);
+                              setDialogOpen(true);
+                            }}>
+                              <Edit />
+                            </IconButton>  
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -186,6 +202,7 @@ export default function NewregionPage() {
               )}
             </Paper>
           </Box>
+          <EditRegionDialog region={selectedRegion} open={dialogOpen} onClose={() => {setDialogOpen(false); fetchRegions();}} />
         </>
       )}
     </>

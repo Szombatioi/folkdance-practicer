@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { DialectService } from './dialect.service';
 import { UpdateDialectDto } from './dto/update-dialect.dto';
 

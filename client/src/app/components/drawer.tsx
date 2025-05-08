@@ -413,7 +413,10 @@ const _setOpen = (open: boolean) => {
             </ListItemButton>
           </ListItem>
           <Divider />
-          <ListItemButton onClick={() => setLandCollapseOpen(!landCollapseOpen)}>
+          <ListItemButton onClick={() => {
+            setOpen(true);
+            setLandCollapseOpen(!landCollapseOpen);
+          }}>
             <ListItemIcon sx={[
                   {
                     minWidth: 0,

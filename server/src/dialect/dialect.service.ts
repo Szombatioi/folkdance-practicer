@@ -70,7 +70,7 @@ export class DialectService {
 
   async update(id: number, newDialectDto: UpdateDialectDto) {
     try{
-      let dialect = await this.findOne(id);
+      const dialect = await this.findOne(id);
       Object.assign(dialect, newDialectDto);
       await this.dialectRepository.save(dialect);
     } catch(e){
