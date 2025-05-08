@@ -1,8 +1,10 @@
 "use client";
 import LoadingSpinner from "@/app/components/loadingSpinner";
+import { Edit } from "@mui/icons-material";
 import {
   Box,
   Button,
+  IconButton,
   MenuItem,
   Paper,
   Select,
@@ -19,6 +21,7 @@ import { DanceType } from "@shared/dance-type";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import EditDanceTypeDialog from "./EditDanceTypeDialog";
 
 export default function NewDanceTypePage() {
   const [danceTypeName, setDanceTypeName] = useState<string>("");
@@ -30,17 +33,21 @@ export default function NewDanceTypePage() {
   const router = useRouter();
 
   const [danceTypes, setDanceTypes] = useState<DanceType[]>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedDanceType, setSelectedDanceType] = useState<DanceType | null>(
+    null
+  );
 
   const fetchDanceTypes = async () => {
-      const response = await axios.get("http://localhost:3001/dance-types");
-      if (response.status >= 200 && response.status < 300) {
-          setDanceTypes(
-            response.data.sort((a: DanceType, b: DanceType) =>
-              a.danceCategory.name.localeCompare(b.danceCategory.name)
-            )
-          );
-      }
-  }
+    const response = await axios.get("http://localhost:3001/dance-types");
+    if (response.status >= 200 && response.status < 300) {
+      setDanceTypes(
+        response.data.sort((a: DanceType, b: DanceType) =>
+          a.danceCategory.name.localeCompare(b.danceCategory.name)
+        )
+      );
+    }
+  };
 
   const isInputValid = () => {
     if (categoryId === 0) {
@@ -68,9 +75,9 @@ export default function NewDanceTypePage() {
     );
     if (response.status >= 200 && response.status < 300) {
       console.log("Sikeres tánctípus létrehozás!"); //TODO snackbar
-    //   router.push("/"); //TODO: maybe to danceTypes page
-        setDanceTypeName("");
-        fetchDanceTypes();
+      //   router.push("/"); //TODO: maybe to danceTypes page
+      setDanceTypeName("");
+      fetchDanceTypes();
     }
   };
 
@@ -163,7 +170,7 @@ export default function NewDanceTypePage() {
               {danceTypes.length > 0 && (
                 <TableContainer
                   style={{
-                    width: "300px",
+                    width: "450px",
                     border: "1px solid grey",
                     borderRadius: "8px",
                   }}
@@ -171,10 +178,12 @@ export default function NewDanceTypePage() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell colSpan={2} align="center">
-                          Típus neve
+                        <TableCell>#</TableCell>
+                        <TableCell align="center">Típus neve</TableCell>
+                        <TableCell align="center">
+                          Tánc kategória neve
                         </TableCell>
-                        <TableCell align="center">Tánc kategória neve</TableCell>
+                        <TableCell></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -187,6 +196,16 @@ export default function NewDanceTypePage() {
                           <TableCell align="center">
                             {danceType.danceCategory.name}
                           </TableCell>
+                          <TableCell>
+                            <IconButton
+                              onClick={() => {
+                                setSelectedDanceType(danceType);
+                                setDialogOpen(true);
+                              }}
+                            >
+                              <Edit />
+                            </IconButton>
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -195,6 +214,7 @@ export default function NewDanceTypePage() {
               )}
             </Paper>
           </Box>
+          <EditDanceTypeDialog open={dialogOpen} onClose={() => {setDialogOpen(false); fetchDanceTypes();}} danceType={selectedDanceType} />
         </>
       )}
     </>

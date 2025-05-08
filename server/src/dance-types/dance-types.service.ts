@@ -47,13 +47,16 @@ export class DanceTypesService {
   async update(id: number, newDto: UpdateDanceTypeDto) {
     // eslint-disable-next-line no-useless-catch
     try{
+      console.log(newDto);
       const dt = await this.findOne(id);
       
       const {newDanceCategoryId, ...data} = newDto;
       Object.assign(dt, data);
 
-      const dc = await this.danceCategoriesService.findOne(newDanceCategoryId);
-      dt.danceCategory = dc;
+      if(newDanceCategoryId && newDanceCategoryId !== 0) {
+        const dc = await this.danceCategoriesService.findOne(newDanceCategoryId);
+        dt.danceCategory = dc;
+      }
 
       return await this.danceTypesRepository.save(dt);
     } catch(e){
