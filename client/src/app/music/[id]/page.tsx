@@ -3,7 +3,14 @@
 
 import LoadingSpinner from "@/app/components/loadingSpinner";
 import { ArrowBack } from "@mui/icons-material";
-import { Box, IconButton, Link, Pagination, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Link,
+  Pagination,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { Lyric } from "@shared/lyric";
 import { Music } from "@shared/music";
 import axios from "axios";
@@ -35,14 +42,13 @@ export default function ViewMusicPage() {
     fetchMusic();
   }, []);
 
-  
   return (
     <>
       {music ? (
         <Box>
           <Paper sx={{ padding: "1rem" }} elevation={3}>
             <IconButton onClick={() => router.back()}>
-                <ArrowBack />
+              <ArrowBack />
             </IconButton>
             <Typography variant="h3" align="center">
               {music.title}
@@ -64,17 +70,30 @@ export default function ViewMusicPage() {
 
             {music.lyrics.length > 0 && (
               <div>
-                <div style={{marginTop: "1rem", marginBottom: "1rem", marginLeft: "auto", marginRight: "auto", width: "45%", textAlign: "center"}}>
-                    <Typography>
-                        {music?.lyrics[selectedLyric - 1]?.text ?? "Error"}
-                    </Typography>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginBottom: "1rem",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    width: "45%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography sx={{ whiteSpace: "pre-line" }}>
+                    {music?.lyrics[selectedLyric - 1]?.text ?? "Error"}
+                  </Typography>
                 </div>
-                <Pagination
+                {music.lyrics.length > 1 && (
+                  <Pagination
                     page={selectedLyric}
-                    onChange={(e,v) => {setSelectedLyric(v)}}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                  count={music.lyrics.length}
-                ></Pagination>
+                    onChange={(e, v) => {
+                      setSelectedLyric(v);
+                    }}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                    count={music.lyrics.length}
+                  ></Pagination>
+                )}
               </div>
             )}
           </Paper>

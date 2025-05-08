@@ -146,7 +146,7 @@ export class MusicService {
   //TODO
   async remove(id: number) {
     const music = await this.findOne(id);
-
+    console.log(music);
     return await this.musicRepository.remove(music);
   }
 }
